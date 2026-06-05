@@ -263,8 +263,13 @@ app.post('/api/subscriber/request-login-link', async (req, res) => {
       return res.status(404).json({ error: 'This email is not registered with us. Please check the spelling or subscribe first.' });
     }
 
-    // Send access email
-    await sendLoginLinkEmail(subscriber);
+    // Send access email with a 10-second timeout
+    const emailPromise = sendLoginLinkEmail(subscriber);
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Email sending timed out. Please check your connection or try again.')), 10000);
+    });
+
+    await Promise.race([emailPromise, timeoutPromise]);
 
     res.json({ 
       success: true, 
@@ -272,7 +277,7 @@ app.post('/api/subscriber/request-login-link', async (req, res) => {
     });
   } catch (err) {
     console.error('Request login link error:', err);
-    res.status(500).json({ error: 'Failed to send login link. Please try again later.' });
+    res.status(500).json({ error: err.message || 'Failed to send login link. Please try again later.' });
   }
 });
 
