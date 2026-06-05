@@ -263,10 +263,10 @@ app.post('/api/subscriber/request-login-link', async (req, res) => {
       return res.status(404).json({ error: 'This email is not registered with us. Please check the spelling or subscribe first.' });
     }
 
-    // Send access email with a 10-second timeout
+    // Send access email with a 20-second timeout (Railway SMTP can be slow)
     const emailPromise = sendLoginLinkEmail(subscriber);
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Email sending timed out. Please check your connection or try again.')), 10000);
+      setTimeout(() => reject(new Error('Email sending timed out. Please try again in a moment.')), 20000);
     });
 
     await Promise.race([emailPromise, timeoutPromise]);

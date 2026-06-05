@@ -6,14 +6,19 @@ const nodemailer = require('nodemailer');
 // SMTP Transporter
 // ────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // STARTTLS — works on Railway (port 465 is often blocked)
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
   },
-  connectionTimeout: 8000, // 8 seconds
-  greetingTimeout: 8000,   // 8 seconds
-  socketTimeout: 10000,    // 10 seconds
+  tls: {
+    rejectUnauthorized: false, // Accept self-signed certs in cloud envs
+  },
+  connectionTimeout: 10000, // 10 seconds
+  greetingTimeout: 10000,   // 10 seconds
+  socketTimeout: 15000,     // 15 seconds
 });
 
 // Verify connection on startup
