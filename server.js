@@ -426,7 +426,8 @@ app.post('/api/admin/subscribers', requireAdmin, async (req, res) => {
 
     res.json({ success: true, message: `${email} added successfully` });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('❌ Admin Add Subscriber Error:', err);
+    res.status(500).json({ error: err.message || String(err) || 'Internal Server Error' });
   }
 });
 
@@ -438,7 +439,8 @@ app.post('/api/admin/test-email', requireAdmin, async (req, res) => {
     const result = await triggerSendNow(email);
     res.json({ success: true, ...result });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('❌ Admin Test Email Error:', err);
+    res.status(500).json({ error: err.message || String(err) || 'Internal Server Error' });
   }
 });
 
@@ -448,7 +450,8 @@ app.post('/api/admin/send-now', requireAdmin, async (req, res) => {
     const result = await triggerSendNow();
     res.json({ success: true, ...result });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('❌ Admin Send-Now Error:', err);
+    res.status(500).json({ error: err.message || String(err) || 'Internal Server Error' });
   }
 });
 

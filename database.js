@@ -131,6 +131,15 @@ async function initDB() {
         UNIQUE(shloka_id, ist_date)
       );
     `);
+    
+    // Safe migrations for PostgreSQL
+    try { await exec(`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS preferred_language VARCHAR(50) DEFAULT 'both'`); } catch(e) { console.error('PG Migration Error:', e); }
+    try { await exec(`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS primary_source VARCHAR(50) DEFAULT 'all'`); } catch(e) { console.error('PG Migration Error:', e); }
+    try { await exec(`ALTER TABLE ai_cache ADD COLUMN IF NOT EXISTS ai_reflection_en TEXT`); } catch(e) { console.error('PG Migration Error:', e); }
+    try { await exec(`ALTER TABLE ai_cache ADD COLUMN IF NOT EXISTS ai_reflection_hi TEXT`); } catch(e) { console.error('PG Migration Error:', e); }
+    try { await exec(`ALTER TABLE ai_cache ADD COLUMN IF NOT EXISTS ai_practice_en TEXT`); } catch(e) { console.error('PG Migration Error:', e); }
+    try { await exec(`ALTER TABLE ai_cache ADD COLUMN IF NOT EXISTS ai_practice_hi TEXT`); } catch(e) { console.error('PG Migration Error:', e); }
+
     console.log('✅ PostgreSQL Database initialized.');
   } else {
     const dataDir = path.join(__dirname, 'data');
