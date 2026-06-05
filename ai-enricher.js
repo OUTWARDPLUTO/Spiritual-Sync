@@ -28,7 +28,7 @@ async function getEnrichedContent(shloka) {
 
   try {
     console.log(`🤖 Generating Bilingual AI content for shloka #${shloka.id}...`);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }, { timeout: 3000 });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' }, { timeout: 3000 });
 
     const prompt = `You are a spiritual guide helping modern people connect with ancient Indian wisdom.
 
