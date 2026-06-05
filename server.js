@@ -106,20 +106,25 @@ app.post('/api/subscribe', async (req, res) => {
     // Create Razorpay order
     const result = await createOrder(plan, email, name);
 
-    if (result.isFree) {
-      // Trial — no payment needed, add directly
+    // Bypass payment if Razorpay is not configured or uses dummy/test keys
+    const bypassPayment = !process.env.RAZORPAY_KEY_ID || 
+                          process.env.RAZORPAY_KEY_ID.includes('xxxx') || 
+                          process.env.RAZORPAY_KEY_ID.includes('rzp_test_xxxxxxxxxxxxxxxx');
+
+    if (result.isFree || bypassPayment) {
+      // Trial or Bypassed plan — add directly
       const token = uuidv4();
-      const paidUntil = calculatePaidUntil('trial');
+      const paidUntil = calculatePaidUntil(plan);
 
       await subscriberQueries.create({
         name,
         email,
-        plan: 'trial',
+        plan,
         preferred_hour: hourNum,
         paid_until: paidUntil,
         unsubscribe_token: token,
-        razorpay_payment_id: null,
-        razorpay_order_id: null,
+        razorpay_payment_id: bypassPayment ? 'bypass_test_payment' : null,
+        razorpay_order_id: bypassPayment ? 'bypass_test_order' : null,
         status: 'active',
         preferred_language: langVal,
         primary_source: sourceVal
@@ -133,7 +138,7 @@ app.post('/api/subscribe', async (req, res) => {
       return res.json({
         success: true,
         isFree: true,
-        message: 'Trial started! Check your email for a welcome message.',
+        message: bypassPayment ? 'Subscription active (Bypassed payment for testing) 🪷' : 'Trial started! Check your email for a welcome message.',
       });
     }
 
