@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Spiritual Sync 🪷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="page-center">
+    <div class="page-card" id="success-card">
+      <div class="page-icon">🪷</div>
+      <h1>Namaste! Welcome!</h1>
+      <p id="welcome-msg">
+        Your subscription is active. Daily wisdom is now on its way to you!
+      </p>
+
+      <div class="highlight-box">
+        <strong>Your Daily Delivery</strong>
+        <span id="time-display">6:00 AM IST</span>
+      </div>
+
+      <p style="font-size:14px;color:rgba(255,248,232,0.5);">
+        Check your inbox for a welcome email. Your first shloka arrives tomorrow at your chosen time.
+      </p>
+
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(200,134,10,0.2);">
+        <p style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,224,130,0.8);font-size:18px;line-height:1.6;">
+          "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन"
+        </p>
+        <p style="font-size:13px;color:rgba(255,248,232,0.4);margin-top:8px;">
+          Your right is to perform your duty — the fruits shall follow. 🙏
+        </p>
+      </div>
+
+      <a href="/" class="btn-back" style="margin-top:24px;">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name') || 'Friend';
+    const plan = params.get('plan') || 'trial';
+    const hour = parseInt(params.get('hour')) || 6;
+
+    const timeLabels = {
+      4: '4:00 AM — Brahma Muhurta ✨',
+      5: '5:00 AM — Early Morning ⭐',
+      6: '6:00 AM — Sunrise 🌅',
+      7: '7:00 AM — Morning 🌄',
+      8: '8:00 AM — Late Morning ☀️',
+      12: '12:00 PM — Noon 🌞',
+      18: '6:00 PM — Evening 🌇',
+      21: '9:00 PM — Night 🌙',
+    };
+
+    document.querySelector('h1').textContent = `Namaste, ${name}! 🙏`;
+    document.getElementById('time-display').textContent = timeLabels[hour] || `${hour}:00 IST`;
+
+    const planMsgs = {
+      trial: 'Your <strong>7-day free trial</strong> is now active! Enjoy your daily dose of ancient wisdom.',
+      monthly_all: 'Your <strong>All-Scriptures Monthly Plan</strong> is active! Daily wisdom for the next 30 days.',
+      yearly_all: 'Your <strong>All-Scriptures Annual Plan</strong> is active! 365 days of divine guidance await you.',
+      monthly_individual: 'Your <strong>Single-Scripture Monthly Plan</strong> is active! Daily wisdom for the next 30 days.',
+      yearly_individual: 'Your <strong>Single-Scripture Annual Plan</strong> is active! 365 days of divine guidance await you.',
+    };
+    document.getElementById('welcome-msg').innerHTML = planMsgs[plan] || planMsgs.trial;
+  </script>
+</body>
+</html>

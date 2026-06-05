@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Subscription — Spiritual Sync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .profile-card {
+      max-width: 600px;
+      margin: 120px auto 60px;
+    }
+    .profile-greeting {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .profile-email {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(184,142,47,0.15);
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .profile-badge {
+      background: rgba(184, 142, 47, 0.12);
+      border: 1px solid var(--border);
+      color: var(--gold-bright);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(251, 248, 243, 0.12);
+      color: var(--text-faint);
+      padding: 10px 18px;
+      border-radius: 40px;
+      font-size: 12px;
+      transition: all 0.3s var(--ease-out);
+      cursor: none;
+      display: inline-block;
+      margin-top: 30px;
+    }
+    .btn-secondary:hover {
+      color: #FC8181;
+      border-color: #E53E3E;
+      background: rgba(229, 62, 62, 0.05);
+    }
+    
+    /* Confirmation Overlay Modal */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,7,0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .confirm-overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+    .confirm-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      max-width: 440px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      transform: scale(0.9);
+      transition: transform 0.3s var(--ease-spring);
+    }
+    .confirm-overlay.show .confirm-card {
+      transform: scale(1);
+    }
+    .confirm-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+    .confirm-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .confirm-text {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .confirm-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn-confirm-yes {
+      flex: 1;
+      background: #E53E3E;
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: none;
+      transition: all 0.3s;
+    }
+    .btn-confirm-yes:hover {
+      background: #C53030;
+      box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+    }
+    .btn-confirm-no {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      color: var(--cream);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 500;
+      cursor: none;
+      transition: all 0.3s;
+    }
+    .btn-confirm-no:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-glow"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- Navigation -->
+  <nav id="nav" class="scrolled">
+    <div class="nav-inner">
+      <a class="nav-logo" href="/">
+        <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21C12 21 16 17.5 16 13C16 9.5 12 4 12 4C12 4 8 9.5 8 13C8 17.5 12 21 12 21Z" />
+          <path d="M12 21C12 21 20.5 19 20.5 13C20.5 8.5 16.5 6.5 12 4" />
+          <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
+          <path d="M12 17.5C13.3807 17.5 14.5 16.3807 14.5 15C14.5 13.6193 13.3807 12.5 12 12.5C10.6193 12.5 9.5 13.6193 9.5 15C9.5 16.3807 10.6193 17.5 12 17.5Z" />
+        </svg>
+        <span>Spiritual Sync</span>
+      </a>
+      <a href="/" class="nav-cta">← Home</a>
+    </div>
+  </nav>
+
+  <div class="container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+    <div class="profile-card form-card glass" id="profile-main-card" style="width: 100%; display: none;">
+      <div class="form-glow-border"></div>
+      
+      <!-- Card Header -->
+      <div style="padding: 40px 40px 0;">
+        <div class="profile-greeting" id="sub-greeting">Namaste, Friend 🙏</div>
+        <div class="profile-email">
+          <span id="sub-email-display">your@email.com</span>
+          <span class="profile-badge" id="sub-plan-badge">Plan</span>
+        </div>
+      </div>
+
+      <!-- Update Form -->
+      <form id="profile-update-form" style="padding-top: 0;">
+        <!-- Scripture Focus -->
+        <div class="form-field">
+          <label for="profile-source">Scripture Focus</label>
+          <div class="input-wrap">
+            <select id="profile-source" style="width:100%; background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:12px; padding:14px; color:var(--cream); outline:none;">
+              <option value="all" id="opt-source-all">All Rotating (Gita, Ramayan, Upanishads)</option>
+              <option value="gita">Bhagavad Gita Only</option>
+              <option value="ramayan">Valmiki Ramayan Only</option>
+              <option value="upanishad">Upanishads Only</option>
+            </select>
+          </div>
+          <p class="option-desc" id="plan-restriction-note" style="display:none; color:#FC8181; margin-top:6px;">
+            ⚠️ Single-scripture plan: Locked to your selected scripture focus.
+          </p>
+        </div>
+
+        <!-- Language Preference -->
+        <div class="form-field">
+          <label for="profile-lang">Preferred Language</label>
+          <div class="input-wrap">
+            <select id="profile-lang" style="width:100%; background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:12px; padding:14px; color:var(--cream); outline:none;">
+              <option value="both">Both (Sanskrit + English + Hindi)</option>
+              <option value="english">English Only (Sanskrit + English)</option>
+              <option value="hindi">Hindi Only (Sanskrit + Hindi)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Delivery Time -->
+        <div class="form-field">
+          <label>Delivery Time <span class="label-sub">(IST)</span></label>
+          <div class="time-grid" style="grid-template-columns: repeat(4, 1fr); gap: 8px;">
+            <button type="button" class="time-btn" data-hour="4">4 AM</button>
+            <button type="button" class="time-btn" data-hour="5">5 AM</button>
+            <button type="button" class="time-btn" data-hour="6">6 AM</button>
+            <button type="button" class="time-btn" data-hour="7">7 AM</button>
+            <button type="button" class="time-btn" data-hour="8">8 AM</button>
+            <button type="button" class="time-btn" data-hour="12">12 PM</button>
+            <button type="button" class="time-btn" data-hour="18">6 PM</button>
+            <button type="button" class="time-btn" data-hour="21">9 PM</button>
+          </div>
+          <input type="hidden" id="selected-hour" value="6">
+        </div>
+
+        <button type="submit" class="btn-subscribe magnetic" id="btn-save-profile">
+          <span>Save Changes 🪷</span>
+          <div class="btn-shimmer"></div>
+        </button>
+
+        <div style="text-align: center;">
+          <button type="button" class="btn-secondary" id="btn-cancel-trigger">Cancel Subscription</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Error/Loader state -->
+    <div class="page-card" id="profile-loader-card" style="max-width: 400px; padding: 40px 30px;">
+      <div class="page-icon" id="loader-icon">🙏</div>
+      <h1 id="loader-title">Loading Account...</h1>
+      <p id="loader-message">Retrieving your subscription details.</p>
+    </div>
+  </div>
+
+  <!-- Unsubscribe Confirmation Overlay -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-card">
+      <div class="confirm-icon">🕊️</div>
+      <div class="confirm-title">Are you sure?</div>
+      <div class="confirm-text">
+        We will miss sharing daily wisdom with you. Your subscription will be canceled immediately and you will stop receiving daily emails.
+      </div>
+      <div class="confirm-actions">
+        <button class="btn-confirm-no" id="btn-confirm-cancel">No, Keep It</button>
+        <button class="btn-confirm-yes" id="btn-confirm-execute">Yes, Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    let token = '';
+    let selectedHour = 6;
+    let isIndividualPlan = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      token = params.get('token');
+
+      if (!token) {
+        showError('Invalid Link', 'This subscriber link is invalid or expired.');
+        return;
+      }
+
+      loadProfile();
+
+      // Form updates
+      const form = document.getElementById('profile-update-form');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        saveProfile();
+      });
+
+      // Hour Buttons
+      const timeBtns = document.querySelectorAll('.time-btn');
+      timeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          timeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedHour = parseInt(btn.dataset.hour);
+          document.getElementById('selected-hour').value = selectedHour;
+        });
+      });
+
+      // Confirm modal triggers
+      const btnCancelTrigger = document.getElementById('btn-cancel-trigger');
+      const btnConfirmCancel  = document.getElementById('btn-confirm-cancel');
+      const btnConfirmExecute = document.getElementById('btn-confirm-execute');
+      const overlay = document.getElementById('confirm-overlay');
+
+      btnCancelTrigger.addEventListener('click', () => {
+        overlay.classList.add('show');
+      });
+      btnConfirmCancel.addEventListener('click', () => {
+        overlay.classList.remove('show');
+      });
+      btnConfirmExecute.addEventListener('click', executeUnsubscribe);
+      
+      // Cursor hovers
+      [btnCancelTrigger, btnConfirmCancel, btnConfirmExecute].forEach(btn => {
+        btn.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        btn.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+    });
+
+    async function loadProfile() {
+      try {
+        const res = await fetch(`/api/subscriber/profile?token=${token}`);
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          showError('Account Not Found', data.error || 'Could not load your subscriber details.');
+          return;
+        }
+
+        const sub = data.subscriber;
+        
+        // Hide loader & show form
+        document.getElementById('profile-loader-card').style.display = 'none';
+        const mainCard = document.getElementById('profile-main-card');
+        mainCard.style.display = 'block';
+
+        // Render details
+        document.getElementById('sub-greeting').textContent = `Namaste, ${sub.name} 🙏`;
+        document.getElementById('sub-email-display').textContent = sub.email;
+        
+        const planLabels = {
+          trial: '7-Day Free Trial',
+          monthly_all: 'All-Scriptures Monthly',
+          yearly_all: 'All-Scriptures Annual',
+          monthly_individual: 'Single-Scripture Monthly',
+          yearly_individual: 'Single-Scripture Annual'
+        };
+        document.getElementById('sub-plan-badge').textContent = planLabels[sub.plan] || sub.plan;
+
+        // Set form fields
+        document.getElementById('profile-lang').value = sub.preferred_language;
+        document.getElementById('profile-source').value = sub.primary_source;
+
+        isIndividualPlan = sub.plan.includes('individual');
+        if (isIndividualPlan) {
+          // Hide 'All' option and show note
+          document.getElementById('opt-source-all').style.display = 'none';
+          document.getElementById('plan-restriction-note').style.display = 'block';
+        }
+
+        // Set active hour
+        selectedHour = sub.preferred_hour;
+        document.getElementById('selected-hour').value = selectedHour;
+        document.querySelectorAll('.time-btn').forEach(btn => {
+          if (parseInt(btn.dataset.hour) === selectedHour) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+      } catch (err) {
+        showError('Connection Error', 'Failed to retrieve your account details. Please refresh.');
+      }
+    }
+
+    async function saveProfile() {
+      const preferred_language = document.getElementById('profile-lang').value;
+      const primary_source = document.getElementById('profile-source').value;
+      
+      const saveBtn = document.getElementById('btn-save-profile');
+      saveBtn.disabled = true;
+      saveBtn.querySelector('span').textContent = 'Saving...';
+
+      try {
+        const res = await fetch(`/api/subscriber/profile?token=${token}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            preferred_hour: selectedHour,
+            preferred_language,
+            primary_source
+          })
+        });
+        const data = await res.json();
+        
+        if (res.ok && data.success) {
+          showToast('Settings saved successfully! 🪷', 'success');
+        } else {
+          showToast(data.error || 'Failed to save settings.', 'error');
+        }
+      } catch (err) {
+        showToast('Connection failed. Try again.', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.querySelector('span').textContent = 'Save Changes 🪷';
+      }
+    }
+
+    async function executeUnsubscribe() {
+      document.getElementById('confirm-overlay').classList.remove('show');
+      
+      // Show loader card state
+      document.getElementById('profile-main-card').style.display = 'none';
+      const loaderCard = document.getElementById('profile-loader-card');
+      loaderCard.style.display = 'block';
+      
+      const icon = document.getElementById('loader-icon');
+      const title = document.getElementById('loader-title');
+      const msg = document.getElementById('loader-message');
+
+      icon.textContent = '⏳';
+      title.textContent = 'Unsubscribing...';
+      msg.textContent = 'Deactivating your daily email account.';
+
+      try {
+        const res = await fetch(`/api/unsubscribe?token=${token}`);
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          icon.textContent = '🕊️';
+          title.textContent = 'Unsubscribed';
+          msg.innerHTML = `You have been successfully unsubscribed from Spiritual Sync.<br><br>
+            <em style="color:rgba(251,248,243,0.5);font-size:14px;">
+              "जो जाता है वह लौट भी आता है।"<br>
+              You're always welcome back on your spiritual journey. 🙏
+            </em>`;
+        } else {
+          icon.textContent = '❌';
+          title.textContent = 'Error';
+          msg.textContent = data.error || 'Failed to unsubscribe. Please try again.';
+        }
+      } catch (err) {
+        icon.textContent = '❌';
+        title.textContent = 'Error';
+        msg.textContent = 'Failed to connect. Please try again.';
+      }
+    }
+
+    function showError(titleText, messageText) {
+      document.getElementById('profile-loader-card').style.display = 'block';
+      document.getElementById('profile-main-card').style.display = 'none';
+      document.getElementById('loader-icon').textContent = '❌';
+      document.getElementById('loader-title').textContent = titleText;
+      document.getElementById('loader-message').textContent = messageText;
+    }
+  </script>
+</body>
+</html>

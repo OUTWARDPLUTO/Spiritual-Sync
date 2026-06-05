@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Spiritual Sync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="admin-body">
+
+  <!-- ── Login Screen ── -->
+  <div class="admin-login" id="login-screen">
+    <div class="admin-login-card">
+      <div style="font-size:48px;margin-bottom:16px;">🪷</div>
+      <h1>Admin Panel</h1>
+      <p>Spiritual Sync Management</p>
+      <input type="password" id="admin-password" placeholder="Enter admin password" autocomplete="current-password">
+      <button class="btn-admin" onclick="adminLogin()" style="width:100%;padding:14px;font-size:15px;">
+        Login →
+      </button>
+      <p id="login-error" style="color:#FC8181;font-size:13px;margin-top:12px;display:none;">Wrong password. Try again.</p>
+    </div>
+  </div>
+
+  <!-- ── Main Dashboard ── -->
+  <div class="admin-layout" id="dashboard" style="display:none;">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <h2>🪷 Spiritual Sync</h2>
+        <p>Admin Dashboard</p>
+      </div>
+      <button class="admin-nav-btn active" onclick="showSection('overview')" id="nav-overview">📊 Overview</button>
+      <button class="admin-nav-btn" onclick="showSection('subscribers')" id="nav-subscribers">👥 Subscribers</button>
+      <button class="admin-nav-btn" onclick="showSection('send')" id="nav-send">📧 Send Email</button>
+      <button class="admin-nav-btn" onclick="showSection('logs')" id="nav-logs">📋 Logs</button>
+      <button class="admin-nav-btn" onclick="showSection('add')" id="nav-add">➕ Add Subscriber</button>
+      <button class="admin-nav-btn" onclick="adminLogout()" style="margin-top:auto;color:#FC8181;">🚪 Logout</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Overview -->
+      <div class="admin-section active" id="section-overview">
+        <div class="admin-header">
+          <h2 class="admin-title">📊 Overview</h2>
+          <button class="btn-admin" onclick="loadStats()">🔄 Refresh</button>
+        </div>
+
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><div class="stat-label">Active Subscribers</div><div class="stat-value" id="stat-active">—</div></div>
+          <div class="stat-card"><div class="stat-label">Total Subscribers</div><div class="stat-value" id="stat-total">—</div></div>
+          <div class="stat-card"><div class="stat-label">Emails Sent Today</div><div class="stat-value" id="stat-sent">—</div></div>
+        </div>
+
+        <div style="background:#111;border:1px solid rgba(200,134,10,0.15);border-radius:10px;padding:24px;margin-top:0;">
+          <div style="color:rgba(200,134,10,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">📖 Today's Shloka</div>
+          <div id="today-shloka" style="color:#E2E8F0;font-size:15px;">Loading...</div>
+        </div>
+      </div>
+
+      <!-- Subscribers -->
+      <div class="admin-section" id="section-subscribers">
+        <div class="admin-header">
+          <h2 class="admin-title">👥 Subscribers</h2>
+          <button class="btn-admin" onclick="loadSubscribers()">🔄 Refresh</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="subscribers-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Plan</th>
+                <th>Language</th>
+                <th>Focus</th>
+                <th>Status</th>
+                <th>Time</th>
+                <th>Paid Until</th>
+                <th>Joined</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="subscribers-body">
+              <tr><td colspan="10" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Send Email -->
+      <div class="admin-section" id="section-send">
+        <div class="admin-header">
+          <h2 class="admin-title">📧 Send Email</h2>
+        </div>
+
+        <div style="display:grid;gap:20px;max-width:600px;">
+          <!-- Test Email -->
+          <div style="background:#111;border:1px solid rgba(200,134,10,0.15);border-radius:10px;padding:24px;">
+            <h3 style="color:var(--gold-light);margin-bottom:8px;">🧪 Send Test Email</h3>
+            <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:16px;">Send today's shloka to a specific email to test the system.</p>
+            <div style="display:flex;gap:12px;">
+              <input type="email" class="admin-input" id="test-email" placeholder="test@email.com" style="flex:1;">
+              <button class="btn-admin" onclick="sendTestEmail()">Send Test →</button>
+            </div>
+            <div id="test-result" style="margin-top:12px;font-size:13px;"></div>
+          </div>
+
+          <!-- Force Send Now -->
+          <div style="background:#111;border:1px solid rgba(200,134,10,0.15);border-radius:10px;padding:24px;">
+            <h3 style="color:var(--gold-light);margin-bottom:8px;">⚡ Force Send Now</h3>
+            <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:16px;">Immediately send today's shloka to all subscribers whose preferred hour matches right now.</p>
+            <button class="btn-admin" onclick="forceSendNow()">Send to Current-Hour Subscribers →</button>
+            <div id="force-result" style="margin-top:12px;font-size:13px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs -->
+      <div class="admin-section" id="section-logs">
+        <div class="admin-header">
+          <h2 class="admin-title">📋 Send Logs</h2>
+          <button class="btn-admin" onclick="loadLogs()">🔄 Refresh</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Shloka</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="logs-body">
+              <tr><td colspan="5" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Add Subscriber -->
+      <div class="admin-section" id="section-add">
+        <div class="admin-header">
+          <h2 class="admin-title">➕ Add Subscriber</h2>
+        </div>
+        <div style="background:#111;border:1px solid rgba(200,134,10,0.15);border-radius:10px;padding:28px;max-width:500px;">
+          <div style="display:grid;gap:16px;">
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Name</label>
+              <input type="text" class="admin-input" id="add-name" placeholder="Subscriber name" style="width:100%;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Email</label>
+              <input type="email" class="admin-input" id="add-email" placeholder="email@example.com" style="width:100%;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Plan</label>
+              <select class="admin-input" id="add-plan" style="width:100%;">
+                <option value="trial">Trial</option>
+                <option value="monthly_all">Monthly (All-in-One)</option>
+                <option value="yearly_all">Yearly (All-in-One)</option>
+                <option value="monthly_individual">Monthly (Single Scripture)</option>
+                <option value="yearly_individual">Yearly (Single Scripture)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Preferred Language</label>
+              <select class="admin-input" id="add-lang" style="width:100%;">
+                <option value="both" selected>English & Hindi</option>
+                <option value="english">English Only</option>
+                <option value="hindi">Hindi Only</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Scripture Focus</label>
+              <select class="admin-input" id="add-source" style="width:100%;">
+                <option value="all" selected>All Scriptures</option>
+                <option value="gita">Bhagavad Gita</option>
+                <option value="ramayan">Ramayana</option>
+                <option value="upanishad">Upanishads</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Preferred Hour (IST)</label>
+              <select class="admin-input" id="add-hour" style="width:100%;">
+                <option value="4">4:00 AM — Brahma Muhurta</option>
+                <option value="5">5:00 AM — Early Morning</option>
+                <option value="6" selected>6:00 AM — Sunrise</option>
+                <option value="7">7:00 AM — Morning</option>
+                <option value="8">8:00 AM — Late Morning</option>
+                <option value="12">12:00 PM — Noon</option>
+                <option value="18">6:00 PM — Evening</option>
+                <option value="21">9:00 PM — Night</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Active Days</label>
+              <input type="number" class="admin-input" id="add-days" value="30" min="1" max="365" style="width:100%;">
+            </div>
+            <button class="btn-admin" onclick="addSubscriber()" style="padding:14px;">Add Subscriber →</button>
+            <div id="add-result" style="font-size:13px;"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
