@@ -2,16 +2,22 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
-// ────────────────────────────────────────────────
-// SMTP Transporter
-// ────────────────────────────────────────────────
+// Strip spaces from Gmail App Password (Gmail displays it as 'xxxx xxxx xxxx xxxx' but SMTP needs no spaces)
+const GMAIL_USER = process.env.GMAIL_USER || '';
+const GMAIL_PASS = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
+
+// Startup diagnostics
+if (!GMAIL_USER) console.error('❌ GMAIL_USER env var is missing!');
+if (!GMAIL_PASS) console.error('❌ GMAIL_APP_PASSWORD env var is missing!');
+else console.log(`📧 Email configured for: ${GMAIL_USER} (password: ${GMAIL_PASS.length} chars)`);
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   secure: false, // STARTTLS — works on Railway (port 465 is often blocked)
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
+    user: GMAIL_USER,
+    pass: GMAIL_PASS,
   },
   tls: {
     rejectUnauthorized: false, // Accept self-signed certs in cloud envs
@@ -29,6 +35,7 @@ async function verifyConnection() {
     return true;
   } catch (err) {
     console.error('❌ Gmail SMTP error:', err.message);
+    console.error('   → Check GMAIL_USER and GMAIL_APP_PASSWORD env vars on Railway');
     return false;
   }
 }
