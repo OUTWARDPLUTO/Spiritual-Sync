@@ -2067,14 +2067,12 @@ select.admin-input {
   transform: translateY(-2px);
 }
 
-/* Custom Success Page Cursor Overrides */
-@media (max-width: 1024px) {
-  .page-center, .page-card, .btn-back {
-    cursor: auto !important;
-  }
-  .btn-back {
-    cursor: pointer !important;
-  }
+/* Restore normal cursor on success page (global) */
+.page-center, .page-center * {
+  cursor: auto !important;
+}
+.page-center a, .page-center button, .page-center .btn-back {
+  cursor: pointer !important;
 }
 
 /* ══════════════════════════════════════════════
