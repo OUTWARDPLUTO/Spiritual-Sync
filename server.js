@@ -5,7 +5,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const { initDB, subscriberQueries, logQueries, getISTDateString } = require('./database');
 const { createOrder, verifyPayment, calculatePaidUntil, PLANS } = require('./razorpay');
-const { sendWelcomeEmail, verifyConnection } = require('./emailer');
+const { sendWelcomeEmail, sendLoginLinkEmail, verifyConnection } = require('./emailer');
 const { startScheduler, getTodaysShloka, triggerSendNow } = require('./scheduler');
 
 const app = express();
@@ -103,15 +103,15 @@ app.post('/api/subscribe', async (req, res) => {
       return res.status(409).json({ error: 'This email is already subscribed and active.' });
     }
 
-    // Create Razorpay order
-    const result = await createOrder(plan, email, name);
-
     // Bypass payment if Razorpay is not configured or uses dummy/test keys
     const bypassPayment = !process.env.RAZORPAY_KEY_ID || 
                           process.env.RAZORPAY_KEY_ID.includes('xxxx') || 
                           process.env.RAZORPAY_KEY_ID.includes('rzp_test_xxxxxxxxxxxxxxxx');
 
-    if (result.isFree || bypassPayment) {
+    const planDetails = PLANS[plan];
+    const isFree = planDetails ? planDetails.price === 0 : false;
+
+    if (isFree || bypassPayment) {
       // Trial or Bypassed plan — add directly
       const token = uuidv4();
       const paidUntil = calculatePaidUntil(plan);
@@ -141,6 +141,9 @@ app.post('/api/subscribe', async (req, res) => {
         message: bypassPayment ? 'Subscription active (Bypassed payment for testing) 🪷' : 'Trial started! Check your email for a welcome message.',
       });
     }
+
+    // Create Razorpay order
+    const result = await createOrder(plan, email, name);
 
     // Paid plan — return order details for Razorpay checkout
     res.json({
@@ -235,6 +238,32 @@ app.get('/api/unsubscribe', async (req, res) => {
 
   await subscriberQueries.unsubscribe(token);
   res.json({ success: true, message: `Unsubscribed ${subscriber.email} successfully.` });
+});
+
+// POST /api/subscriber/request-login-link — Request profile access link
+app.post('/api/subscriber/request-login-link', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ error: 'Email address is required' });
+    }
+
+    const subscriber = await subscriberQueries.findByEmail(email);
+    if (!subscriber) {
+      return res.status(404).json({ error: 'This email is not registered with us. Please check the spelling or subscribe first.' });
+    }
+
+    // Send access email
+    await sendLoginLinkEmail(subscriber);
+
+    res.json({ 
+      success: true, 
+      message: 'Access link sent! Please check your email inbox (and spam folder) 🙏' 
+    });
+  } catch (err) {
+    console.error('Request login link error:', err);
+    res.status(500).json({ error: 'Failed to send login link. Please try again later.' });
+  }
 });
 
 // GET /api/subscriber/profile — Fetch subscriber settings by token

@@ -44,10 +44,16 @@
         <a href="#preview" class="nav-link" data-text="Preview">Preview</a>
         <a href="#features" class="nav-link" data-text="Features">Features</a>
         <a href="#plans" class="nav-link" data-text="Plans">Plans</a>
+        <a href="#" class="nav-link" id="nav-manage-link" data-text="Profile">Profile</a>
       </div>
-      <button class="nav-cta magnetic" onclick="window.location.href='/store'">
-        Subscribe <span class="nav-cta-icon">→</span>
-      </button>
+      <div class="nav-actions" style="display: flex; gap: 10px; align-items: center;">
+        <button class="nav-cta secondary-cta magnetic" id="nav-mobile-profile-btn" style="background: transparent; border: 1px solid rgba(184,142,47,0.15); color: var(--text-dim); padding: 8px 16px; border-radius: 40px; font-size: 13px;">
+          Profile 👤
+        </button>
+        <button class="nav-cta magnetic" onclick="window.location.href='/store'">
+          Subscribe <span class="nav-cta-icon">→</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -593,6 +599,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
           <a href="#preview">Preview</a>
           <a href="#features">Features</a>
           <a href="#plans">Plans</a>
+          <a href="#" id="footer-manage-link">Manage Subscription</a>
           <a href="/admin">Admin</a>
         </div>
       </div>
@@ -602,6 +609,25 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
       </div>
     </div>
   </footer>
+
+  <!-- ═══ PROFILE ACCESS MODAL ═══ -->
+  <div class="modal-overlay" id="profile-modal">
+    <div class="modal-card">
+      <div class="modal-logo">🪷</div>
+      <h3 class="modal-title">Access Your Profile</h3>
+      <p class="modal-desc">Enter the email address associated with your subscription, and we will instantly send you a secure link to manage your settings.</p>
+      
+      <form class="modal-form" id="profile-request-form">
+        <input type="email" class="modal-input" id="profile-request-email" placeholder="name@example.com" required autocomplete="email">
+        <div class="modal-actions">
+          <button type="button" class="btn-modal-cancel" id="profile-modal-close">Cancel</button>
+          <button type="submit" class="btn-modal-submit">Send Access Link →</button>
+        </div>
+      </form>
+      
+      <div class="modal-status" id="profile-modal-status"></div>
+    </div>
+  </div>
 
   <!-- Razorpay SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

@@ -434,4 +434,81 @@ function getTimeLabel(hour) {
   return labels[hour] || `${hour}:00 daily`;
 }
 
-module.exports = { sendDailyShloka, sendWelcomeEmail, verifyConnection, getTimeLabel };
+// ────────────────────────────────────────────────
+// Login Link Email
+// ────────────────────────────────────────────────
+async function sendLoginLinkEmail(subscriber) {
+  const linkUrl = `${process.env.BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
+  const html = buildLoginLinkEmailHTML(subscriber, linkUrl);
+
+  const mailOptions = {
+    from: `"${process.env.EMAIL_FROM_NAME || 'Spiritual Sync 🪷'}" <${process.env.GMAIL_USER}>`,
+    to: subscriber.email,
+    subject: `🪷 Access Your Spiritual Sync Profile`,
+    html,
+  };
+
+  return transporter.sendMail(mailOptions);
+}
+
+function buildLoginLinkEmailHTML(subscriber, linkUrl) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spiritual Sync Profile Access</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600&display=swap');
+    body { font-family: 'Inter', sans-serif; background: #0A0807; margin:0; padding:0; color: rgba(251,248,243,0.9); }
+  </style>
+</head>
+<body style="background-color:#0A0807; font-family:'Inter',sans-serif; margin:0; padding:40px 10px;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+      <td>
+        <table width="600" cellpadding="0" cellspacing="0" align="center" style="max-width:600px;width:100%;background:#120F0D;border:1px solid rgba(184,142,47,0.18);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+          <tr>
+            <td style="background:linear-gradient(135deg,#5E1919,#B88E2F,#5E1919);padding:40px 24px;text-align:center;">
+              <div style="font-size:48px;margin-bottom:12px;">🪷</div>
+              <h1 style="margin:0;color:#EAD292;font-size:28px;font-weight:normal;font-family:'Cormorant Garamond',serif;letter-spacing:1px;">Spiritual Sync</h1>
+              <p style="margin:10px 0 0;color:rgba(255,255,255,0.9);font-size:15px;">Profile Access Link 🙏</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:40px 32px;background:#120F0D;">
+              <p style="color:#FBF8F3;font-size:16px;line-height:1.8;margin:0 0 20px;">
+                Namaste <strong>${subscriber.name}</strong>,
+              </p>
+              <p style="color:rgba(251,248,243,0.7);font-size:15px;line-height:1.8;margin:0 0 32px;">
+                We received a request to access your Spiritual Sync subscriber settings. 
+                Using the link below, you can view your profile, adjust your daily delivery hour, change your language preference, choose your scripture focus, or manage your subscription status.
+              </p>
+              
+              <div style="text-align:center;margin:36px 0;">
+                <a href="${linkUrl}" style="background:#B88E2F;color:#120F0D;padding:16px 36px;border-radius:30px;font-weight:bold;text-decoration:none;font-size:16px;display:inline-block;box-shadow:0 10px 25px rgba(184,142,47,0.25);transition:all 0.3s;letter-spacing:0.5px;">
+                  Access Settings & Profile 🪷
+                </a>
+              </div>
+              
+              <p style="color:rgba(251,248,243,0.4);font-size:13px;line-height:1.8;margin:32px 0 0;text-align:center;border-top:1px solid rgba(184,142,47,0.1);padding-top:24px;">
+                If you did not request this email, you can safely ignore it. Your profile link is unique and secure.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#0F0D0C;padding:20px 32px;border-top:1px solid rgba(184,142,47,0.1);text-align:center;">
+              <p style="margin:0;color:rgba(251,248,243,0.3);font-size:12px;">
+                Spiritual Sync 🪷 | Connecting Ancient Wisdom to Modern Souls
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+module.exports = { sendDailyShloka, sendWelcomeEmail, sendLoginLinkEmail, verifyConnection, getTimeLabel };

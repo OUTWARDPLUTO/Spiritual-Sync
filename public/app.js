@@ -57,6 +57,15 @@ function initCursor() {
   const follower = document.getElementById('cursor-follower');
   if (!cursor) return;
 
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (isTouch || window.innerWidth <= 1024) {
+    cursor.style.display = 'none';
+    if (glow) glow.style.display = 'none';
+    if (follower) follower.style.display = 'none';
+    document.body.style.cursor = 'auto';
+    return;
+  }
+
   let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
   let glowX = mouseX, glowY = mouseY;
   let followerX = mouseX, followerY = mouseY;
@@ -612,3 +621,89 @@ function showToast(msg, type = 'info') {
 function scrollToForm() {
   document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth' });
 }
+
+// ─────────────────────────────────────────────────
+// PROFILE ACCESS MODAL FLOW
+// ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const profileModal = document.getElementById('profile-modal');
+  const openLinks = [
+    document.getElementById('nav-manage-link'),
+    document.getElementById('nav-mobile-profile-btn'),
+    document.getElementById('footer-manage-link')
+  ].filter(Boolean);
+  const closeBtn = document.getElementById('profile-modal-close');
+  const requestForm = document.getElementById('profile-request-form');
+  const statusEl = document.getElementById('profile-modal-status');
+
+  if (profileModal && openLinks.length > 0) {
+    // Open modal
+    openLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        profileModal.classList.add('show');
+        statusEl.style.display = 'none';
+        statusEl.className = 'modal-status';
+        requestForm.reset();
+        document.getElementById('profile-request-email')?.focus();
+      });
+    });
+
+    // Close modal on close button click
+    closeBtn?.addEventListener('click', () => {
+      profileModal.classList.remove('show');
+    });
+
+    // Close modal on clicking outside the modal card
+    profileModal.addEventListener('click', (e) => {
+      if (e.target === profileModal) {
+        profileModal.classList.remove('show');
+      }
+    });
+
+    // Handle form submit
+    requestForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('profile-request-email').value.trim();
+      const submitBtn = requestForm.querySelector('button[type="submit"]');
+      
+      if (!email) return;
+
+      // Show sending state
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending... ⏳';
+      }
+      statusEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/subscriber/request-login-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          statusEl.textContent = data.message;
+          statusEl.className = 'modal-status success';
+          statusEl.style.display = 'block';
+          requestForm.reset();
+        } else {
+          statusEl.textContent = data.error || 'This email is not registered. Please check or subscribe first.';
+          statusEl.className = 'modal-status error';
+          statusEl.style.display = 'block';
+        }
+      } catch (err) {
+        statusEl.textContent = 'Connection error. Please try again.';
+        statusEl.className = 'modal-status error';
+        statusEl.style.display = 'block';
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Access Link →';
+        }
+      }
+    });
+  }
+});
