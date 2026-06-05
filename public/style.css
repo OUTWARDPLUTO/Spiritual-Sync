@@ -1978,3 +1978,101 @@ select.admin-input {
     gap: 16px;
   }
 }
+
+/* ══════════════════════════════════════════════
+   SUCCESS PAGE STYLES (success.html)
+   ══════════════════════════════════════════════ */
+.page-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(ellipse 80% 60% at 50% 30%, #1A0C00 0%, #080304 50%, #030204 100%);
+}
+.page-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+  animation: fadeUp 0.8s var(--ease-out);
+}
+.page-icon {
+  font-size: 54px;
+  margin-bottom: 24px;
+  animation: pulseOm 3s ease-in-out infinite;
+}
+@keyframes pulseOm {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px var(--glow-gold)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 15px var(--glow-gold)); }
+}
+.page-card h1 {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+.page-card p {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.page-card strong {
+  color: var(--gold-bright);
+}
+.highlight-box {
+  background: rgba(184, 142, 47, 0.08);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.highlight-box strong {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+}
+.highlight-box span {
+  font-size: 18px;
+  font-family: var(--font-serif);
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+.btn-back {
+  display: inline-block;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--cream);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* Custom Success Page Cursor Overrides */
+@media (max-width: 1024px) {
+  .page-center, .page-card, .btn-back {
+    cursor: auto !important;
+  }
+  .btn-back {
+    cursor: pointer !important;
+  }
+}

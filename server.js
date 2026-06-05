@@ -18,6 +18,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Request Logging Middleware
+app.use((req, res, next) => {
+  console.log(`[REQUEST] ${req.method} ${req.url} - Body:`, JSON.stringify(req.body));
+  const start = Date.now();
+  res.on('finish', () => {
+    console.log(`[RESPONSE] ${req.method} ${req.url} - Status: ${res.statusCode} - Duration: ${Date.now() - start}ms`);
+  });
+  next();
+});
+
 // CORS for development
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
