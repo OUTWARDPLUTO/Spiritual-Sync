@@ -442,16 +442,16 @@ async function start() {
   // Initialize database
   await initDB();
 
-  // Verify Gmail connection
-  await verifyConnection();
-
-  // Start cron scheduler
-  startScheduler();
-
   app.listen(PORT, () => {
     console.log(`\n🚀 Server running at http://localhost:${PORT}`);
     console.log(`📋 Admin panel: http://localhost:${PORT}/admin`);
     console.log(`🌐 Store page: http://localhost:${PORT}/store\n`);
+
+    // Verify Gmail connection in the background so it doesn't block startup
+    verifyConnection().then(() => {
+      // Start cron scheduler
+      startScheduler();
+    }).catch(console.error);
   });
 }
 
