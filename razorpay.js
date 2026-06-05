@@ -3,10 +3,20 @@ require('dotenv').config();
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+let razorpay = null;
+
+try {
+  if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
+    razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+  } else {
+    console.warn('⚠️ Warning: RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET is missing. Checkout functions will be disabled.');
+  }
+} catch (e) {
+  console.error('⚠️ Warning: Razorpay initialization failed:', e.message);
+}
 
 // Subscription plan details
 const PLANS = {
@@ -53,6 +63,10 @@ async function createOrder(plan, subscriberEmail, subscriberName) {
   // Free trial — no payment needed
   if (planDetails.price === 0) {
     return { isFree: true, plan: planDetails };
+  }
+
+  if (!razorpay) {
+    throw new Error('Razorpay is not configured. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to your environment variables.');
   }
 
   const order = await razorpay.orders.create({
