@@ -180,7 +180,15 @@ async function triggerSendNow(targetEmail = null) {
       preferred_hour: 6
     };
     
-    const shloka = getSubscriberShloka(mockSub);
+    // Choose a random shloka for testing so that subsequent test mails send different teachings
+    const source = mockSub.primary_source || 'all';
+    let pool = shlokas;
+    if (source === 'gita' && gitaShlokas.length > 0) pool = gitaShlokas;
+    else if (source === 'ramayan' && ramayanShlokas.length > 0) pool = ramayanShlokas;
+    else if (source === 'upanishad' && upanishadShlokas.length > 0) pool = upanishadShlokas;
+
+    const randomIdx = Math.floor(Math.random() * pool.length);
+    const shloka = pool[randomIdx];
     const aiContent = await getEnrichedContent(shloka);
     
     await sendDailyShloka(mockSub, shloka, aiContent);

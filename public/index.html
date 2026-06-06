@@ -2,33 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080507">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Spiritual Sync — Ancient Wisdom. Modern Life.</title>
   <meta name="description" content="Receive daily shlokas from Bhagavad Gita, Ramayan & Upanishads with AI-powered reflections at your chosen time.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ═══ CUSTOM CURSOR ═══ -->
+  <!-- ═══ CUSTOM CURSOR (desktop only) ═══ -->
   <div id="cursor"></div>
   <div id="cursor-glow"></div>
-  <div id="cursor-follower"></div>
 
   <!-- ═══ PAGE LOADER ═══ -->
   <div id="loader">
-    <div class="loader-inner">
-      <div class="loader-om">ॐ</div>
-      <div class="loader-brand">Spiritual Sync</div>
-      <div class="loader-bar"><div class="loader-progress"></div></div>
-    </div>
+    <div class="loader-om">ॐ</div>
+    <div class="loader-brand">Spiritual Sync</div>
+    <div class="loader-bar"><div class="loader-progress"></div></div>
   </div>
 
   <!-- ═══ SCROLL PROGRESS ═══ -->
   <div id="scroll-progress"></div>
 
-  <!-- ═══ NAVIGATION ═══ -->
+  <!-- ═══ TOP NAVIGATION ═══ -->
   <nav id="nav">
     <div class="nav-inner">
       <a class="nav-logo" href="#">
@@ -38,80 +38,118 @@
           <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
           <path d="M12 17.5C13.3807 17.5 14.5 16.3807 14.5 15C14.5 13.6193 13.3807 12.5 12 12.5C10.6193 12.5 9.5 13.6193 9.5 15C9.5 16.3807 10.6193 17.5 12 17.5Z" />
         </svg>
-        <span>Spiritual Sync</span>
+        <span class="nav-logo-text">Spiritual Sync</span>
       </a>
+
+      <!-- Desktop nav links -->
       <div class="nav-links">
-        <a href="#preview" class="nav-link" data-text="Preview">Preview</a>
-        <a href="#features" class="nav-link" data-text="Features">Features</a>
-        <a href="#plans" class="nav-link" data-text="Plans">Plans</a>
-        <a href="#" class="nav-link" id="nav-manage-link" data-text="Profile">Profile</a>
+        <a href="#preview" class="nav-link">Preview</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#plans" class="nav-link">Plans</a>
+        <a href="#" class="nav-link" id="nav-manage-link">Profile</a>
       </div>
-      <div class="nav-actions" style="display: flex; gap: 10px; align-items: center;">
-        <button class="nav-cta secondary-cta magnetic" id="nav-mobile-profile-btn" style="background: transparent; border: 1px solid rgba(184,142,47,0.15); color: var(--text-dim); padding: 8px 16px; border-radius: 40px; font-size: 13px; white-space: nowrap;">
-          Profile 👤
-        </button>
-        <button class="nav-cta magnetic" onclick="window.location.href='/store'">
+
+      <div class="nav-actions">
+        <button class="nav-cta" id="nav-mobile-profile-btn">Profile 👤</button>
+        <button class="nav-cta" onclick="window.location.href='/store'">
           Subscribe <span class="nav-cta-icon">→</span>
         </button>
       </div>
     </div>
   </nav>
 
+  <!-- ═══ BOTTOM NAVIGATION (mobile only) ═══ -->
+  <nav id="bottom-nav">
+    <a href="#hero" class="bnav-item active" id="bnav-home">
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="#preview" class="bnav-item" id="bnav-preview">
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      <span>Preview</span>
+    </a>
+    <a href="#plans" class="bnav-item" id="bnav-plans">
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      <span>Plans</span>
+    </a>
+    <button class="bnav-item" id="bnav-profile">
+      <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
-    <!-- Animated orbs -->
+    <!-- Background orbs -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
     <div class="orb orb-4"></div>
 
-    <!-- Grid lines -->
+    <!-- Grid texture -->
     <div class="hero-grid"></div>
 
     <!-- Particles -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- 3D Parallax layers -->
+    <!-- Floating Sanskrit symbols -->
     <div class="parallax-layer layer-1" data-speed="0.05">
       <div class="floating-symbol s1">ॐ</div>
       <div class="floating-symbol s2">🪷</div>
-      <div class="floating-symbol s3">卐</div>
+      <div class="floating-symbol s3">✦</div>
       <div class="floating-symbol s4">🕉️</div>
     </div>
     <div class="parallax-layer layer-2" data-speed="0.1">
-      <div class="floating-symbol s5">✦</div>
-      <div class="floating-symbol s6">◈</div>
+      <div class="floating-symbol s5">◈</div>
+      <div class="floating-symbol s6">❋</div>
     </div>
 
     <!-- Main content -->
     <div class="hero-content" id="hero-content">
+      <!-- 3D OM Badge -->
+      <div class="hero-om-badge">ॐ</div>
+
       <div class="hero-eyebrow reveal-up">
         <span class="eyebrow-dot"></span>
         Ancient Wisdom · Modern Life
         <span class="eyebrow-dot"></span>
       </div>
+
       <h1 class="hero-title">
         <div class="title-line"><span class="char-reveal">Divine</span></div>
         <div class="title-line"><span class="char-reveal"><span class="gradient-text">Wisdom</span></span></div>
         <div class="title-line title-line-small"><span class="char-reveal">In Your</span> <span class="char-reveal"><span class="gradient-text-2">Inbox.</span></span></div>
       </h1>
+
       <p class="hero-sub reveal-up delay-3">
-        Daily shlokas from Bhagavad Gita, Ramayan & Upanishads —<br>
+        Daily shlokas from Bhagavad Gita, Ramayan &amp; Upanishads —<br>
         enriched with mindful AI reflections, delivered at <em>your</em> chosen time.
       </p>
+
       <div class="hero-actions reveal-up delay-4">
-        <button class="btn-primary magnetic" id="hero-cta" onclick="window.location.href='/store'">
+        <button class="btn-primary" id="hero-cta" onclick="window.location.href='/store'">
           <span class="btn-text">Begin Free Trial</span>
           <span class="btn-icon">🪷</span>
           <div class="btn-shimmer"></div>
         </button>
-        <a href="#preview" class="btn-outline magnetic">
+        <a href="#preview" class="btn-outline">
           <span>Today's Shloka</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </a>
       </div>
 
-      <!-- Floating pills -->
+      <!-- Scripture pills -->
       <div class="hero-pills reveal-up delay-5">
         <div class="pill"><span class="pill-dot"></span>Bhagavad Gita</div>
         <div class="pill"><span class="pill-dot"></span>Ramayan</div>
@@ -120,11 +158,9 @@
       </div>
     </div>
 
-    <!-- Scroll indicator -->
+    <!-- Scroll indicator (desktop) -->
     <div class="scroll-indicator">
-      <div class="scroll-mouse">
-        <div class="scroll-wheel"></div>
-      </div>
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
       <span>Scroll</span>
     </div>
   </section>
@@ -165,9 +201,9 @@
         <p class="section-sub">This is what lands in your inbox every morning</p>
       </div>
 
-      <div class="preview-wrapper" data-animate="scale-in">
-        <!-- 3D Tilt Card -->
-        <div class="shloka-3d-card tilt-card" id="shloka-preview">
+      <div class="preview-wrapper">
+        <!-- 3D Shloka Card -->
+        <div class="shloka-3d-card tilt-card" id="shloka-preview" data-animate="scale-in">
           <div class="card-shine"></div>
           <div class="card-loading">
             <div class="loading-om">ॐ</div>
@@ -175,7 +211,7 @@
           </div>
         </div>
 
-        <!-- Side decoration -->
+        <!-- Side decoration (desktop only) -->
         <div class="preview-deco">
           <div class="deco-line"></div>
           <div class="deco-om">ॐ</div>
@@ -194,20 +230,19 @@
         <p class="section-sub">We draw daily wisdom from the three pillars of ancient spiritual knowledge</p>
       </div>
 
-      <div class="sources-grid">
-        <div class="source-card tilt-card" data-animate="fade-up" data-delay="0">
+      <!-- Swipeable on mobile, grid on desktop -->
+      <div class="sources-scroll" id="sources-scroll">
+        <div class="source-card tilt-card" data-animate="fade-up">
           <div class="source-icon-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-              <path d="M8 6h8" />
-              <path d="M8 10h8" />
-              <path d="M8 14h6" />
+              <path d="M8 6h8" /><path d="M8 10h8" /><path d="M8 14h6" />
             </svg>
           </div>
           <h3>Bhagavad Gita</h3>
-          <p>The dialogue between Sri Krishna and Arjun on the battlefield of Kurukshetra. Delivers direct philosophy regarding duty, selfless action, mental equilibrium, and living with purpose.</p>
-          <div class="source-meta">Dharma & Mind Mastery</div>
+          <p>The dialogue between Sri Krishna and Arjun on the battlefield of Kurukshetra. Direct philosophy on duty, selfless action, mental equilibrium, and living with purpose.</p>
+          <div class="source-meta">Dharma &amp; Mind Mastery</div>
         </div>
 
         <div class="source-card tilt-card" data-animate="fade-up" data-delay="100">
@@ -220,22 +255,29 @@
             </svg>
           </div>
           <h3>Valmiki Ramayan</h3>
-          <p>The epic narrative of Maryada Purushottam Ram. Provides deep examples of righteous conduct, family obligations, leadership ethics, and unwavering adherence to moral truth.</p>
-          <div class="source-meta">Virtue & Conduct</div>
+          <p>The epic narrative of Maryada Purushottam Ram. Deep examples of righteous conduct, family obligations, leadership ethics, and unwavering adherence to moral truth.</p>
+          <div class="source-meta">Virtue &amp; Conduct</div>
         </div>
 
         <div class="source-card tilt-card" data-animate="fade-up" data-delay="200">
           <div class="source-icon-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2C12 2 15 6 15 10C15 14 12 22 12 22C12 22 9 14 9 10C9 6 12 2 12 2Z" />
-              <path d="M12 6c1.5 1 3 2.5 3 4s-1.5 3-3 4" />
-              <path d="M12 6c-1.5 1-3 2.5-3 4s1.5 3 3 4" />
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83"/>
+              <path d="M2 12h4M18 12h4"/>
             </svg>
           </div>
           <h3>The Upanishads</h3>
-          <p>The philosophical crown of Vedic literature. Explores the nature of ultimate reality (Brahman), the self (Atman), mindfulness, inner silence, and the path to ultimate liberation.</p>
+          <p>The philosophical crown of Vedic literature. Explores the nature of ultimate reality (Brahman), the self (Atman), inner silence, and the path to liberation.</p>
           <div class="source-meta">Pure Philosophy</div>
         </div>
+      </div>
+
+      <!-- Scroll dots (mobile indicator) -->
+      <div class="scroll-hint" id="sources-dots">
+        <div class="scroll-dot active"></div>
+        <div class="scroll-dot"></div>
+        <div class="scroll-dot"></div>
       </div>
     </div>
   </section>
@@ -250,46 +292,42 @@
 
       <div class="hiw-steps">
         <div class="hiw-step" data-animate="slide-right" data-delay="0">
-          <div class="step-number">01</div>
           <div class="step-icon-wrap"><div class="step-icon">✍️</div></div>
           <div class="step-content">
+            <div class="step-number">01</div>
             <h3>Subscribe</h3>
             <p>Choose your plan, enter your email, and pick your favourite time of day.</p>
           </div>
-          <div class="step-connector"></div>
         </div>
-        <div class="hiw-step" data-animate="slide-right" data-delay="150">
-          <div class="step-number">02</div>
+        <div class="hiw-step" data-animate="slide-right" data-delay="100">
           <div class="step-icon-wrap"><div class="step-icon">🤖</div></div>
           <div class="step-content">
+            <div class="step-number">02</div>
             <h3>AI Enriches</h3>
-            <p>Our AI reads the ancient shloka and crafts a fresh, modern reflection just for today.</p>
+            <p>Our AI reads the ancient shloka and crafts a fresh, modern reflection for today.</p>
           </div>
-          <div class="step-connector"></div>
         </div>
-        <div class="hiw-step" data-animate="slide-right" data-delay="300">
-          <div class="step-number">03</div>
+        <div class="hiw-step" data-animate="slide-right" data-delay="200">
           <div class="step-icon-wrap"><div class="step-icon">📧</div></div>
           <div class="step-content">
+            <div class="step-number">03</div>
             <h3>Delivered</h3>
             <p>A beautifully designed email lands in your inbox at your exact chosen time.</p>
           </div>
-          <div class="step-connector hide"></div>
         </div>
-        <div class="hiw-step" data-animate="slide-right" data-delay="450">
-          <div class="step-number">04</div>
+        <div class="hiw-step" data-animate="slide-right" data-delay="300">
           <div class="step-icon-wrap"><div class="step-icon">🌱</div></div>
           <div class="step-content">
+            <div class="step-number">04</div>
             <h3>Grow Daily</h3>
             <p>Apply today's practice, read tomorrow's wisdom. Watch yourself transform.</p>
           </div>
-          <div class="step-connector hide"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ BY THE NUMBERS ═══ -->
+  <!-- ═══ STATS ═══ -->
   <section class="stats-section">
     <div class="container">
       <div class="stats-grid">
@@ -299,7 +337,7 @@
         </div>
         <div class="stat-item" data-animate="fade-up" data-delay="100">
           <div class="stat-number">8</div>
-          <div class="stat-label">Custom Delivery Slots</div>
+          <div class="stat-label">Delivery Slots</div>
         </div>
         <div class="stat-item" data-animate="fade-up" data-delay="200">
           <div class="stat-number">3</div>
@@ -307,7 +345,7 @@
         </div>
         <div class="stat-item" data-animate="fade-up" data-delay="300">
           <div class="stat-number">100%</div>
-          <div class="stat-label">Ad-Free Devotional Space</div>
+          <div class="stat-label">Ad-Free</div>
         </div>
       </div>
     </div>
@@ -324,36 +362,36 @@
       <div class="features-grid">
         <div class="feat-card tilt-card" data-animate="fade-up" data-delay="0">
           <div class="card-shine"></div>
-          <div class="feat-icon">📿</div>
+          <span class="feat-icon">📿</span>
           <h3>Sacred Sanskrit</h3>
           <p>Original Devanagari script with accurate Roman transliteration — feel the vibration.</p>
           <div class="feat-glow"></div>
         </div>
         <div class="feat-card tilt-card" data-animate="fade-up" data-delay="100">
           <div class="card-shine"></div>
-          <div class="feat-icon">🇮🇳</div>
+          <span class="feat-icon">🇮🇳</span>
           <h3>Dual Language</h3>
           <p>Deep Hindi and English meanings so not a single drop of wisdom is lost.</p>
           <div class="feat-glow"></div>
         </div>
         <div class="feat-card tilt-card large" data-animate="fade-up" data-delay="200">
           <div class="card-shine"></div>
-          <div class="feat-icon">🤖</div>
+          <span class="feat-icon">🤖</span>
           <h3>Mindful AI Reflection</h3>
           <p>Every day, the system transforms ancient Sanskrit into practical guidance for your modern life — stress, goals, relationships, purpose.</p>
-          <div class="feat-tag">AI Reflection</div>
+          <div class="feat-tag">AI Powered</div>
           <div class="feat-glow"></div>
         </div>
         <div class="feat-card tilt-card" data-animate="fade-up" data-delay="300">
           <div class="card-shine"></div>
-          <div class="feat-icon">⏰</div>
+          <span class="feat-icon">⏰</span>
           <h3>Your Time</h3>
           <p>Choose from 8 IST time slots — dawn to night — wisdom on your schedule.</p>
           <div class="feat-glow"></div>
         </div>
         <div class="feat-card tilt-card" data-animate="fade-up" data-delay="400">
           <div class="card-shine"></div>
-          <div class="feat-icon">🌱</div>
+          <span class="feat-icon">🌱</span>
           <h3>Daily Practice</h3>
           <p>One actionable practice per email — a tiny step toward a greater self.</p>
           <div class="feat-glow"></div>
@@ -368,7 +406,7 @@
       <div class="section-header" data-animate="fade-up">
         <div class="section-tag">📧 Interactive Preview</div>
         <h2 class="section-title">See Your Daily Mail</h2>
-        <p class="section-sub">Interact with the controls below to preview how wisdom is delivered to your inbox.</p>
+        <p class="section-sub">Interact with the controls below to preview how wisdom lands in your inbox.</p>
       </div>
 
       <div class="mockup-controls" data-animate="fade-up">
@@ -378,10 +416,10 @@
           <button type="button" class="mock-btn" id="mock-theme-light">Warm Paper</button>
         </div>
         <div class="mock-ctrl-group">
-          <span class="mock-ctrl-label">Language View</span>
-          <button type="button" class="mock-btn active mock-lang-btn" data-view="all">Full Layout</button>
-          <button type="button" class="mock-btn mock-lang-btn" data-view="sanskrit">Sanskrit Only</button>
-          <button type="button" class="mock-btn mock-lang-btn" data-view="translation">Translations Only</button>
+          <span class="mock-ctrl-label">View</span>
+          <button type="button" class="mock-btn active mock-lang-btn" data-view="all">Full</button>
+          <button type="button" class="mock-btn mock-lang-btn" data-view="sanskrit">Sanskrit</button>
+          <button type="button" class="mock-btn mock-lang-btn" data-view="translation">Translations</button>
         </div>
       </div>
 
@@ -392,7 +430,7 @@
             <span class="mock-dot" style="background:#FFBD2E;"></span>
             <span class="mock-dot" style="background:#27C93F;"></span>
           </div>
-          <div class="mock-header-row"><span>From:</span> Daily Shloka &lt;wisdom@dailyshloka.com&gt;</div>
+          <div class="mock-header-row"><span>From:</span> Spiritual Sync &lt;wisdom@spiritualsync.app&gt;</div>
           <div class="mock-header-row"><span>To:</span> Arjun &lt;arjun@wisdom.com&gt;</div>
           <div class="mock-header-row"><span>Subject:</span> 🌸 Bhagavad Gita — Chapter 6, Verse 17</div>
         </div>
@@ -409,7 +447,7 @@
                 </svg>
               </div>
               <div class="mock-email-header-title">Spiritual Sync</div>
-              <div class="mock-email-header-date">Friday, June 5, 2026</div>
+              <div class="mock-email-header-date">Friday, June 6, 2026</div>
             </div>
 
             <div class="mock-email-content">
@@ -420,7 +458,7 @@
                 <div class="mock-email-shloka-devanagari">युक्ताहारविहारस्य युक्तचेष्टस्य कर्मसु।
 युक्तस्वप्नावबोधस्य योगो भवति दुःखहा॥</div>
                 <div class="mock-email-shloka-translit">yuktāhāra-vihārasya yukta-ceṣṭasya karmasu
-ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
+yukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
               </div>
 
               <div class="mock-email-translation-box hindi" id="mock-email-hindi">
@@ -446,8 +484,8 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
 
             <div class="mock-email-footer">
               <div class="mock-email-footer-title">Spiritual Sync 🪷</div>
-              <div style="margin-bottom:8px;">सत्यं वद। धर्मं चर। — Speak Truth. Walk the Path.</div>
-              <div>You are receiving this because you subscribed. <a href="#">Unsubscribe</a> anytime.</div>
+              <div style="margin-bottom:6px;">सत्यं वद। धर्मं चर। — Speak Truth. Walk the Path.</div>
+              <div>You are receiving this because you subscribed. <a href="#" style="color:#B88E2F;">Unsubscribe</a> anytime.</div>
             </div>
           </div>
         </div>
@@ -490,30 +528,28 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
   <section class="form-section" id="form-section">
     <div class="form-bg-orb"></div>
     <div class="container">
-      <div class="form-card glass" data-animate="scale-in" style="text-align:center; padding: 60px 40px;">
+      <div class="form-card glass" data-animate="scale-in">
         <div class="form-glow-border"></div>
-        <div class="form-header" style="padding:0;">
-          <div class="form-lotus">
-            <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 21C12 21 16 17.5 16 13C16 9.5 12 4 12 4C12 4 8 9.5 8 13C8 17.5 12 21 12 21Z" />
-              <path d="M12 21C12 21 20.5 19 20.5 13C20.5 8.5 16.5 6.5 12 4" />
-              <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
-              <path d="M12 17.5C13.3807 17.5 14.5 16.3807 14.5 15C14.5 13.6193 13.3807 12.5 12 12.5C10.6193 12.5 9.5 13.6193 9.5 15C9.5 16.3807 10.6193 17.5 12 17.5Z" />
-            </svg>
-          </div>
-          <h2 style="font-size:36px; margin-bottom:16px;">Begin Your Journey</h2>
-          <p style="color:var(--text-dim); max-width:500px; margin:0 auto 36px; line-height:1.8;">
-            Select your scripture focus, choose your preferred time and language, and start aligning your daily life with ancient wisdom.
-          </p>
+        <div class="form-lotus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21C12 21 16 17.5 16 13C16 9.5 12 4 12 4C12 4 8 9.5 8 13C8 17.5 12 21 12 21Z" />
+            <path d="M12 21C12 21 20.5 19 20.5 13C20.5 8.5 16.5 6.5 12 4" />
+            <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
+            <path d="M12 17.5C13.3807 17.5 14.5 16.3807 14.5 15C14.5 13.6193 13.3807 12.5 12 12.5C10.6193 12.5 9.5 13.6193 9.5 15C9.5 16.3807 10.6193 17.5 12 17.5Z" />
+          </svg>
         </div>
-        <button class="btn-subscribe magnetic" onclick="window.location.href='/store'" style="max-width:320px; margin:0 auto;">
+        <h2 style="font-family:var(--font-serif);font-size:clamp(26px,5vw,36px);margin-bottom:14px;">Begin Your Journey</h2>
+        <p style="color:var(--text-dim);max-width:480px;margin:0 auto 32px;line-height:1.8;font-size:15px;">
+          Select your scripture, choose your time, and start aligning your daily life with ancient wisdom.
+        </p>
+        <button class="btn-subscribe" onclick="window.location.href='/store'">
           Go to Store 🪷
         </button>
       </div>
     </div>
   </section>
 
-  <!-- ═══ FAQ SECTION ═══ -->
+  <!-- ═══ FAQ ═══ -->
   <section class="faq-section" id="faq">
     <div class="container">
       <div class="section-header" data-animate="fade-up">
@@ -530,7 +566,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
               <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-              We rotate daily shlokas across the <strong>Bhagavad Gita</strong>, <strong>Valmiki Ramayan</strong>, and principal <strong>Upanishads</strong> (like Katha, Mundaka, Isha). Every select verse is chosen for its profound, universal, and practical wisdom applicable to modern daily struggles.
+              We rotate daily shlokas across the <strong>Bhagavad Gita</strong>, <strong>Valmiki Ramayan</strong>, and principal <strong>Upanishads</strong> (Katha, Mundaka, Isha). Every verse is chosen for its profound, universal, and practical wisdom applicable to modern daily struggles.
             </div>
           </div>
 
@@ -540,7 +576,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
               <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-              Absolutely! Once you subscribe, you receive a personal subscriber link in every email. From your dashboard, you can change your delivery time slot (Sunrise, Brahma Muhurta, Evening, etc.) instantly with one click.
+              Absolutely! Once you subscribe, you receive a personal subscriber link in every email. From your profile, you can change your delivery time slot instantly with one tap.
             </div>
           </div>
 
@@ -550,7 +586,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
               <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-              We use advanced AI to analyze the traditional Sanskrit commentary and map its core teachings to practical modern contexts. Instead of just reading ancient text, the AI provides actionable insights regarding focus, work-life balance, stress management, relationships, and daily productivity.
+              We use advanced AI to analyze the traditional Sanskrit commentary and map its core teachings to practical modern contexts — stress, work-life balance, relationships, and daily productivity. Every reflection is freshly generated each day.
             </div>
           </div>
 
@@ -560,7 +596,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
               <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-              Yes, we believe in complete transparency and peace of mind. Every email contains a link to manage your settings. From your profile page, you can easily update your preferences or confirm deactivation at any time.
+              Yes. Every email contains a link to manage your settings. From your profile page, you can update preferences or cancel at any time — no questions asked.
             </div>
           </div>
 
@@ -570,7 +606,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
               <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-              We accept all major payment methods processed securely through <strong>Razorpay</strong>. This includes UPI (Google Pay, PhonePe, Paytm), Credit and Debit Cards (Visa, Mastercard, RuPay), Netbanking, and popular wallets.
+              We accept all major payment methods via <strong>Razorpay</strong> — UPI (Google Pay, PhonePe, Paytm), Credit/Debit Cards (Visa, Mastercard, RuPay), Netbanking, and popular wallets.
             </div>
           </div>
         </div>
@@ -585,7 +621,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
       <div class="footer-top">
         <div class="footer-brand">
           <div class="footer-logo">
-            <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 21C12 21 16 17.5 16 13C16 9.5 12 4 12 4C12 4 8 9.5 8 13C8 17.5 12 21 12 21Z" />
               <path d="M12 21C12 21 20.5 19 20.5 13C20.5 8.5 16.5 6.5 12 4" />
               <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
@@ -599,7 +635,7 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
           <a href="#preview">Preview</a>
           <a href="#features">Features</a>
           <a href="#plans">Plans</a>
-          <a href="#" id="footer-manage-link">Manage Subscription</a>
+          <a href="#" id="footer-manage-link">My Profile</a>
           <a href="/admin">Admin</a>
         </div>
       </div>
@@ -615,16 +651,18 @@ ukta-svapnāvabodhasya yogo bhavati duḥkha-hā</div>
     <div class="modal-card">
       <div class="modal-logo">🪷</div>
       <h3 class="modal-title">Access Your Profile</h3>
-      <p class="modal-desc">Enter the email address associated with your subscription, and we will instantly send you a secure link to manage your settings.</p>
-      
+      <p class="modal-desc">Enter your subscription email and we'll instantly send you a secure link to manage your settings.</p>
+
       <form class="modal-form" id="profile-request-form">
-        <input type="email" class="modal-input" id="profile-request-email" placeholder="name@example.com" required autocomplete="email">
+        <input type="email" class="modal-input" id="profile-request-email"
+          placeholder="name@example.com" required autocomplete="email"
+          inputmode="email">
         <div class="modal-actions">
           <button type="button" class="btn-modal-cancel" id="profile-modal-close">Cancel</button>
-          <button type="submit" class="btn-modal-submit">Send Access Link →</button>
+          <button type="submit" class="btn-modal-submit" id="profile-modal-submit">Send Access Link →</button>
         </div>
       </form>
-      
+
       <div class="modal-status" id="profile-modal-status"></div>
     </div>
   </div>

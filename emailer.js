@@ -6,6 +6,10 @@ const nodemailer = require('nodemailer');
 const GMAIL_USER = process.env.GMAIL_USER || '';
 const GMAIL_PASS = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
 
+// Normalize BASE_URL to ensure it contains http:// or https://
+const rawBaseUrl = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = rawBaseUrl.startsWith('http') ? rawBaseUrl : `https://${rawBaseUrl}`;
+
 // Startup diagnostics
 if (!GMAIL_USER) console.error('❌ GMAIL_USER env var is missing!');
 if (!GMAIL_PASS) console.error('❌ GMAIL_APP_PASSWORD env var is missing!');
@@ -44,7 +48,7 @@ async function verifyConnection() {
 // Daily Shloka Email
 // ────────────────────────────────────────────────
 async function sendDailyShloka(subscriber, shloka, aiContent) {
-  const unsubUrl = `${process.env.BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
+  const unsubUrl = `${BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
   const html = buildShlokaEmailHTML(subscriber, shloka, aiContent, unsubUrl);
 
   const mailOptions = {
@@ -62,7 +66,7 @@ async function sendDailyShloka(subscriber, shloka, aiContent) {
 // Welcome Email
 // ────────────────────────────────────────────────
 async function sendWelcomeEmail(subscriber) {
-  const unsubUrl = `${process.env.BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
+  const unsubUrl = `${BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
   const timeLabel = getTimeLabel(subscriber.preferred_hour);
   const html = buildWelcomeEmailHTML(subscriber, timeLabel, unsubUrl);
 
@@ -453,7 +457,7 @@ function getTimeLabel(hour) {
 // Login Link Email
 // ────────────────────────────────────────────────
 async function sendLoginLinkEmail(subscriber) {
-  const linkUrl = `${process.env.BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
+  const linkUrl = `${BASE_URL}/unsubscribe?token=${subscriber.unsubscribe_token}`;
   const html = buildLoginLinkEmailHTML(subscriber, linkUrl);
 
   const mailOptions = {

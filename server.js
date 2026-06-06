@@ -73,7 +73,8 @@ app.get('/api/plans', (req, res) => {
 // POST /api/subscribe — Create subscription order
 app.post('/api/subscribe', async (req, res) => {
   try {
-    const { name, email, plan, preferred_hour, preferred_language, primary_source } = req.body;
+    const { name, plan, preferred_hour, preferred_language, primary_source } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
 
     // Validate
     if (!name || !email || !plan) {
@@ -184,12 +185,12 @@ app.post('/api/verify-payment', async (req, res) => {
       razorpay_payment_id,
       razorpay_signature,
       name,
-      email,
       plan,
       preferred_hour,
       preferred_language,
       primary_source
     } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
 
     // Verify signature
     const isValid = verifyPayment(razorpay_order_id, razorpay_payment_id, razorpay_signature);
@@ -253,7 +254,7 @@ app.get('/api/unsubscribe', async (req, res) => {
 // POST /api/subscriber/request-login-link — Request profile access link
 app.post('/api/subscriber/request-login-link', async (req, res) => {
   try {
-    const { email } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
     if (!email) {
       return res.status(400).json({ error: 'Email address is required' });
     }
@@ -411,7 +412,8 @@ app.delete('/api/admin/subscribers/:id', requireAdmin, async (req, res) => {
 // POST /api/admin/subscribers — Manual add
 app.post('/api/admin/subscribers', requireAdmin, async (req, res) => {
   try {
-    const { name, email, plan, preferred_hour, days, preferred_language, primary_source } = req.body;
+    const { name, plan, preferred_hour, days, preferred_language, primary_source } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
     const token = uuidv4();
     const d = new Date();
     d.setDate(d.getDate() + (parseInt(days) || 30));
@@ -439,7 +441,7 @@ app.post('/api/admin/subscribers', requireAdmin, async (req, res) => {
 // POST /api/admin/test-email
 app.post('/api/admin/test-email', requireAdmin, async (req, res) => {
   try {
-    const { email } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
     if (!email) return res.status(400).json({ error: 'Email required' });
     const result = await triggerSendNow(email);
     res.json({ success: true, ...result });

@@ -2,162 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manage Subscription — Spiritual Sync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080507">
+  <title>My Profile — Spiritual Sync</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
-  <style>
-    .profile-card {
-      max-width: 600px;
-      margin: 120px auto 60px;
-    }
-    .profile-greeting {
-      font-family: var(--font-serif);
-      font-size: 26px;
-      color: var(--cream);
-      margin-bottom: 8px;
-    }
-    .profile-email {
-      font-size: 14px;
-      color: var(--text-dim);
-      margin-bottom: 24px;
-      border-bottom: 1px solid rgba(184,142,47,0.15);
-      padding-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .profile-badge {
-      background: rgba(184, 142, 47, 0.12);
-      border: 1px solid var(--border);
-      color: var(--gold-bright);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid rgba(251, 248, 243, 0.12);
-      color: var(--text-faint);
-      padding: 10px 18px;
-      border-radius: 40px;
-      font-size: 12px;
-      transition: all 0.3s var(--ease-out);
-      cursor: none;
-      display: inline-block;
-      margin-top: 30px;
-    }
-    .btn-secondary:hover {
-      color: #FC8181;
-      border-color: #E53E3E;
-      background: rgba(229, 62, 62, 0.05);
-    }
-    
-    /* Confirmation Overlay Modal */
-    .confirm-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10,8,7,0.85);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100000;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .confirm-overlay.show {
-      display: flex;
-      opacity: 1;
-    }
-    .confirm-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      max-width: 440px;
-      width: 100%;
-      border-radius: 20px;
-      padding: 40px 30px;
-      text-align: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-      transform: scale(0.9);
-      transition: transform 0.3s var(--ease-spring);
-    }
-    .confirm-overlay.show .confirm-card {
-      transform: scale(1);
-    }
-    .confirm-icon {
-      font-size: 40px;
-      margin-bottom: 16px;
-    }
-    .confirm-title {
-      font-family: var(--font-serif);
-      font-size: 24px;
-      color: var(--cream);
-      margin-bottom: 12px;
-    }
-    .confirm-text {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-    .confirm-actions {
-      display: flex;
-      gap: 12px;
-    }
-    .btn-confirm-yes {
-      flex: 1;
-      background: #E53E3E;
-      color: #fff;
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-weight: 600;
-      cursor: none;
-      transition: all 0.3s;
-    }
-    .btn-confirm-yes:hover {
-      background: #C53030;
-      box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
-    }
-    .btn-confirm-no {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      color: var(--cream);
-      border: 1px solid var(--border);
-      padding: 14px;
-      border-radius: 12px;
-      font-weight: 500;
-      cursor: none;
-      transition: all 0.3s;
-    }
-    .btn-confirm-no:hover {
-      background: rgba(255,255,255,0.1);
-    }
-    @media (max-width: 1024px) {
-      body, button, a, .time-btn, .option-card, .btn-secondary, .btn-confirm-yes, .btn-confirm-no {
-        cursor: auto !important;
-      }
-      button, a, select, .time-btn, .option-card, .btn-secondary, .btn-confirm-yes, .btn-confirm-no {
-        cursor: pointer !important;
-      }
-      #cursor, #cursor-glow, #cursor-follower {
-        display: none !important;
-      }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
-  <div id="cursor"></div>
-  <div id="cursor-glow"></div>
-  <div id="cursor-follower"></div>
-
-  <!-- Navigation -->
-  <nav id="nav" class="scrolled">
+  <!-- ═══ TOP NAV ═══ -->
+  <nav id="nav">
     <div class="nav-inner">
       <a class="nav-logo" href="/">
         <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -166,298 +21,263 @@
           <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
           <path d="M12 17.5C13.3807 17.5 14.5 16.3807 14.5 15C14.5 13.6193 13.3807 12.5 12 12.5C10.6193 12.5 9.5 13.6193 9.5 15C9.5 16.3807 10.6193 17.5 12 17.5Z" />
         </svg>
-        <span>Spiritual Sync</span>
+        <span class="nav-logo-text">Spiritual Sync</span>
       </a>
-      <a href="/" class="nav-cta">← Home</a>
+      <div class="nav-actions">
+        <a href="/" style="color:var(--text-dim);font-size:14px;">← Home</a>
+      </div>
     </div>
   </nav>
 
-  <div class="container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
-    <div class="profile-card form-card glass" id="profile-main-card" style="width: 100%; display: none;">
-      <div class="form-glow-border"></div>
-      
-      <!-- Card Header -->
-      <div style="padding: 40px 40px 0;">
-        <div class="profile-greeting" id="sub-greeting">Namaste, Friend 🙏</div>
-        <div class="profile-email">
-          <span id="sub-email-display">your@email.com</span>
-          <span class="profile-badge" id="sub-plan-badge">Plan</span>
-        </div>
+  <!-- ═══ PROFILE PAGE ═══ -->
+  <div class="profile-page" style="padding-top: calc(var(--nav-h) + 24px); padding-bottom: 60px; align-items: center; justify-content: flex-start;">
+    <div style="width:100%; max-width:520px; padding:0 20px;">
+
+      <!-- Loading Card -->
+      <div id="profile-loader-card" class="page-card" style="text-align:center;">
+        <div class="loading-om" style="font-size:52px; margin-bottom:16px;">ॐ</div>
+        <h3 id="loader-title" style="font-family:var(--font-serif); font-size:22px; margin-bottom:10px; color:var(--text);">Loading Your Profile</h3>
+        <p id="loader-message" style="color:var(--text-dim); font-size:14px; line-height:1.7;">Fetching your subscription details...</p>
       </div>
 
-      <!-- Update Form -->
-      <form id="profile-update-form" style="padding-top: 0;">
-        <!-- Scripture Focus -->
-        <div class="form-field">
-          <label for="profile-source">Scripture Focus</label>
-          <div class="input-wrap">
-            <select id="profile-source" style="width:100%; background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:12px; padding:14px; color:var(--cream); outline:none;">
-              <option value="all" id="opt-source-all">All Rotating (Gita, Ramayan, Upanishads)</option>
-              <option value="gita">Bhagavad Gita Only</option>
-              <option value="ramayan">Valmiki Ramayan Only</option>
-              <option value="upanishad">Upanishads Only</option>
-            </select>
-          </div>
-          <p class="option-desc" id="plan-restriction-note" style="display:none; color:#FC8181; margin-top:6px;">
-            ⚠️ Single-scripture plan: Locked to your selected scripture focus.
-          </p>
-        </div>
+      <!-- Main Profile Card (hidden until loaded) -->
+      <div id="profile-main-card" style="display:none;">
 
-        <!-- Language Preference -->
-        <div class="form-field">
-          <label for="profile-lang">Preferred Language</label>
-          <div class="input-wrap">
-            <select id="profile-lang" style="width:100%; background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:12px; padding:14px; color:var(--cream); outline:none;">
-              <option value="both">Both (Sanskrit + English + Hindi)</option>
-              <option value="english">English Only (Sanskrit + English)</option>
-              <option value="hindi">Hindi Only (Sanskrit + Hindi)</option>
-            </select>
+        <!-- Header -->
+        <div style="text-align:center; margin-bottom:28px;">
+          <div style="font-family:var(--font-dev); font-size:40px; color:var(--gold); margin-bottom:12px; animation: loaderPulse 3s ease-in-out infinite;">ॐ</div>
+          <div class="profile-greeting" id="sub-greeting">Namaste 🙏</div>
+          <div class="profile-email">
+            <span id="sub-email-display" style="word-break:break-all;"></span>
+            <span class="profile-plan-badge" id="sub-plan-badge"></span>
           </div>
         </div>
 
-        <!-- Delivery Time -->
-        <div class="form-field">
-          <label>Delivery Time <span class="label-sub">(IST)</span></label>
-          <div class="time-grid" style="grid-template-columns: repeat(4, 1fr); gap: 8px;">
-            <button type="button" class="time-btn" data-hour="4">4 AM</button>
-            <button type="button" class="time-btn" data-hour="5">5 AM</button>
-            <button type="button" class="time-btn" data-hour="6">6 AM</button>
-            <button type="button" class="time-btn" data-hour="7">7 AM</button>
-            <button type="button" class="time-btn" data-hour="8">8 AM</button>
-            <button type="button" class="time-btn" data-hour="12">12 PM</button>
-            <button type="button" class="time-btn" data-hour="18">6 PM</button>
-            <button type="button" class="time-btn" data-hour="21">9 PM</button>
+        <!-- Edit Form -->
+        <form id="profile-update-form">
+
+          <!-- Scripture Source -->
+          <span class="profile-section-label">📖 Scripture Focus</span>
+          <select class="store-select" id="profile-source" style="margin-bottom:20px;">
+            <option value="all">All Scriptures (Gita + Ramayan + Upanishads)</option>
+            <option value="gita">Bhagavad Gita Only</option>
+            <option value="ramayan">Valmiki Ramayan Only</option>
+            <option value="upanishad">Upanishads Only</option>
+          </select>
+          <div id="plan-restriction-note" style="display:none; font-size:12px; color:var(--gold-dim); margin-top:-14px; margin-bottom:20px; padding:10px 14px; background:var(--gold-glow2); border:1px solid var(--border); border-radius:10px;">
+            ℹ️ Your plan is focused on a specific scripture. Upgrade to "All Scriptures" plan to change this.
+          </div>
+
+          <!-- Language -->
+          <span class="profile-section-label">🌍 Language Preference</span>
+          <select class="store-select" id="profile-lang" style="margin-bottom:20px;">
+            <option value="both">Both Hindi &amp; English</option>
+            <option value="english">English Only</option>
+            <option value="hindi">Hindi Only</option>
+          </select>
+
+          <!-- Delivery Time -->
+          <span class="profile-section-label">⏰ Daily Delivery Time (IST)</span>
+          <div class="time-grid" id="profile-time-grid" style="margin-bottom:8px;">
+            <button class="time-btn" type="button" data-hour="4"><span class="time-btn-icon">🌙</span><span class="time-btn-label">4 AM</span></button>
+            <button class="time-btn" type="button" data-hour="5"><span class="time-btn-icon">🌅</span><span class="time-btn-label">5 AM</span></button>
+            <button class="time-btn" type="button" data-hour="6"><span class="time-btn-icon">🌄</span><span class="time-btn-label">6 AM</span></button>
+            <button class="time-btn" type="button" data-hour="7"><span class="time-btn-icon">☀️</span><span class="time-btn-label">7 AM</span></button>
+            <button class="time-btn" type="button" data-hour="8"><span class="time-btn-icon">🌞</span><span class="time-btn-label">8 AM</span></button>
+            <button class="time-btn" type="button" data-hour="12"><span class="time-btn-icon">🕛</span><span class="time-btn-label">12 PM</span></button>
+            <button class="time-btn" type="button" data-hour="18"><span class="time-btn-icon">🌆</span><span class="time-btn-label">6 PM</span></button>
+            <button class="time-btn" type="button" data-hour="21"><span class="time-btn-icon">🌃</span><span class="time-btn-label">9 PM</span></button>
           </div>
           <input type="hidden" id="selected-hour" value="6">
-        </div>
 
-        <button type="submit" class="btn-subscribe magnetic" id="btn-save-profile">
-          <span>Save Changes 🪷</span>
-          <div class="btn-shimmer"></div>
+          <div id="save-status" style="min-height:20px; font-size:14px; text-align:center; margin-top:8px;"></div>
+
+          <button type="submit" class="btn-save" id="btn-save-profile">Save Changes 🙏</button>
+        </form>
+
+        <!-- Cancel subscription -->
+        <button class="btn-cancel-trigger" id="btn-cancel-trigger">
+          Cancel Subscription
         </button>
-
-        <div style="text-align: center;">
-          <button type="button" class="btn-secondary" id="btn-cancel-trigger">Cancel Subscription</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Error/Loader state -->
-    <div class="page-card" id="profile-loader-card" style="max-width: 400px; padding: 40px 30px;">
-      <div class="page-icon" id="loader-icon">🙏</div>
-      <h1 id="loader-title">Loading Account...</h1>
-      <p id="loader-message">Retrieving your subscription details.</p>
+      </div>
     </div>
   </div>
 
-  <!-- Unsubscribe Confirmation Overlay -->
+  <!-- ═══ CANCEL CONFIRMATION OVERLAY ═══ -->
   <div class="confirm-overlay" id="confirm-overlay">
-    <div class="confirm-card">
-      <div class="confirm-icon">🕊️</div>
-      <div class="confirm-title">Are you sure?</div>
-      <div class="confirm-text">
-        We will miss sharing daily wisdom with you. Your subscription will be canceled immediately and you will stop receiving daily emails.
+    <div class="confirm-card" style="margin: 0 20px;">
+      <div style="font-size:36px; margin-bottom:16px; text-align:center;">😢</div>
+      <div class="confirm-title">Cancel Subscription?</div>
+      <div class="confirm-desc">
+        You'll lose access to daily shlokas and AI reflections. Are you sure you want to cancel?
       </div>
       <div class="confirm-actions">
-        <button class="btn-confirm-no" id="btn-confirm-cancel">No, Keep It</button>
-        <button class="btn-confirm-yes" id="btn-confirm-execute">Yes, Cancel</button>
+        <button class="btn-keep" id="btn-confirm-keep">Keep It 🙏</button>
+        <button class="btn-confirm-cancel" id="btn-confirm-execute">Yes, Cancel</button>
       </div>
     </div>
   </div>
 
-  <script src="/app.js"></script>
   <script>
-    let token = '';
+    // ── Token & State ──────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const token  = params.get('token');
     let selectedHour = 6;
-    let isIndividualPlan = false;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      token = params.get('token');
+    // ── Nav scroll effect ──────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav?.classList.toggle('scrolled', window.scrollY > 40);
+    });
 
+    // ── Load Profile ───────────────────────────────────────
+    async function loadProfile() {
       if (!token) {
-        showError('Invalid Link', 'This subscriber link is invalid or expired.');
+        showError('No access token found.', 'Please use the link from your email to access your profile.');
         return;
       }
+      try {
+        const res  = await fetch(`/api/subscriber/profile?token=${token}`);
+        const data = await res.json();
 
-      loadProfile();
+        if (!res.ok) {
+          showError('Link Expired or Invalid', data.error || 'Please request a new access link from the homepage.');
+          return;
+        }
 
-      // Form updates
-      const form = document.getElementById('profile-update-form');
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        saveProfile();
+        renderProfile(data);
+      } catch {
+        showError('Connection Error', 'Could not reach the server. Please try again.');
+      }
+    }
+
+    function renderProfile(data) {
+      document.getElementById('profile-loader-card').style.display = 'none';
+      document.getElementById('profile-main-card').style.display   = 'block';
+
+      // Greeting & info
+      document.getElementById('sub-greeting').textContent   = `Namaste, ${data.name} 🙏`;
+      document.getElementById('sub-email-display').textContent = data.email;
+      document.getElementById('sub-plan-badge').textContent  = data.plan_name || 'Subscriber';
+
+      // Populate form
+      const sourceSelect = document.getElementById('profile-source');
+      const langSelect   = document.getElementById('profile-lang');
+      if (sourceSelect) sourceSelect.value = data.primary_source || 'all';
+      if (langSelect)   langSelect.value   = data.preferred_language || 'both';
+
+      // Check if individual plan — restrict source change
+      const isIndividual = data.plan && (data.plan.includes('individual'));
+      if (isIndividual) {
+        document.getElementById('plan-restriction-note').style.display = 'block';
+        if (sourceSelect) sourceSelect.disabled = true;
+      }
+
+      // Set active time button
+      selectedHour = parseInt(data.preferred_hour) || 6;
+      document.getElementById('selected-hour').value = selectedHour;
+      document.querySelectorAll('#profile-time-grid .time-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.hour) === selectedHour);
       });
 
-      // Hour Buttons
-      const timeBtns = document.querySelectorAll('.time-btn');
-      timeBtns.forEach(btn => {
+      // Time button clicks
+      document.querySelectorAll('#profile-time-grid .time-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          timeBtns.forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('#profile-time-grid .time-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           selectedHour = parseInt(btn.dataset.hour);
           document.getElementById('selected-hour').value = selectedHour;
         });
       });
-
-      // Confirm modal triggers
-      const btnCancelTrigger = document.getElementById('btn-cancel-trigger');
-      const btnConfirmCancel  = document.getElementById('btn-confirm-cancel');
-      const btnConfirmExecute = document.getElementById('btn-confirm-execute');
-      const overlay = document.getElementById('confirm-overlay');
-
-      btnCancelTrigger.addEventListener('click', () => {
-        overlay.classList.add('show');
-      });
-      btnConfirmCancel.addEventListener('click', () => {
-        overlay.classList.remove('show');
-      });
-      btnConfirmExecute.addEventListener('click', executeUnsubscribe);
-      
-      // Cursor hovers
-      [btnCancelTrigger, btnConfirmCancel, btnConfirmExecute].forEach(btn => {
-        btn.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        btn.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-      });
-    });
-
-    async function loadProfile() {
-      try {
-        const res = await fetch(`/api/subscriber/profile?token=${token}`);
-        const data = await res.json();
-
-        if (!res.ok || !data.success) {
-          showError('Account Not Found', data.error || 'Could not load your subscriber details.');
-          return;
-        }
-
-        const sub = data.subscriber;
-        
-        // Hide loader & show form
-        document.getElementById('profile-loader-card').style.display = 'none';
-        const mainCard = document.getElementById('profile-main-card');
-        mainCard.style.display = 'block';
-
-        // Render details
-        document.getElementById('sub-greeting').textContent = `Namaste, ${sub.name} 🙏`;
-        document.getElementById('sub-email-display').textContent = sub.email;
-        
-        const planLabels = {
-          trial: '7-Day Free Trial',
-          monthly_all: 'All-Scriptures Monthly',
-          yearly_all: 'All-Scriptures Annual',
-          monthly_individual: 'Single-Scripture Monthly',
-          yearly_individual: 'Single-Scripture Annual'
-        };
-        document.getElementById('sub-plan-badge').textContent = planLabels[sub.plan] || sub.plan;
-
-        // Set form fields
-        document.getElementById('profile-lang').value = sub.preferred_language;
-        document.getElementById('profile-source').value = sub.primary_source;
-
-        isIndividualPlan = sub.plan.includes('individual');
-        if (isIndividualPlan) {
-          // Hide 'All' option and show note
-          document.getElementById('opt-source-all').style.display = 'none';
-          document.getElementById('plan-restriction-note').style.display = 'block';
-        }
-
-        // Set active hour
-        selectedHour = sub.preferred_hour;
-        document.getElementById('selected-hour').value = selectedHour;
-        document.querySelectorAll('.time-btn').forEach(btn => {
-          if (parseInt(btn.dataset.hour) === selectedHour) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        });
-
-      } catch (err) {
-        showError('Connection Error', 'Failed to retrieve your account details. Please refresh.');
-      }
     }
 
-    async function saveProfile() {
-      const preferred_language = document.getElementById('profile-lang').value;
-      const primary_source = document.getElementById('profile-source').value;
-      
-      const saveBtn = document.getElementById('btn-save-profile');
-      saveBtn.disabled = true;
-      saveBtn.querySelector('span').textContent = 'Saving...';
+    function showError(title, message) {
+      document.getElementById('loader-title').textContent   = title;
+      document.getElementById('loader-message').textContent = message;
+      document.querySelector('.loading-om').textContent = '😔';
+      document.querySelector('.loading-om').style.animation = 'none';
+    }
+
+    // ── Save Profile ───────────────────────────────────────
+    document.getElementById('profile-update-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn    = document.getElementById('btn-save-profile');
+      const status = document.getElementById('save-status');
+      const source = document.getElementById('profile-source')?.value;
+      const lang   = document.getElementById('profile-lang')?.value;
+      const hour   = document.getElementById('selected-hour')?.value;
+
+      btn.disabled     = true;
+      btn.textContent  = '⏳ Saving...';
+      status.textContent = '';
 
       try {
         const res = await fetch(`/api/subscriber/profile?token=${token}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            preferred_hour: selectedHour,
-            preferred_language,
-            primary_source
-          })
+            preferred_hour:     parseInt(hour),
+            preferred_language: lang,
+            primary_source:     source,
+          }),
         });
         const data = await res.json();
-        
+
         if (res.ok && data.success) {
-          showToast('Settings saved successfully! 🪷', 'success');
+          status.style.color   = '#68D391';
+          status.textContent   = '✅ Preferences saved!';
+          btn.textContent      = 'Save Changes 🙏';
         } else {
-          showToast(data.error || 'Failed to save settings.', 'error');
+          status.style.color   = '#FC8181';
+          status.textContent   = data.error || 'Failed to save. Please try again.';
+          btn.textContent      = 'Save Changes 🙏';
         }
-      } catch (err) {
-        showToast('Connection failed. Try again.', 'error');
+      } catch {
+        status.style.color   = '#FC8181';
+        status.textContent   = 'Connection error. Please try again.';
+        btn.textContent      = 'Save Changes 🙏';
       } finally {
-        saveBtn.disabled = false;
-        saveBtn.querySelector('span').textContent = 'Save Changes 🪷';
+        btn.disabled = false;
+        setTimeout(() => { status.textContent = ''; }, 4000);
       }
-    }
+    });
 
-    async function executeUnsubscribe() {
+    // ── Cancel Subscription ────────────────────────────────
+    document.getElementById('btn-cancel-trigger')?.addEventListener('click', () => {
+      document.getElementById('confirm-overlay').classList.add('show');
+    });
+    document.getElementById('btn-confirm-keep')?.addEventListener('click', () => {
       document.getElementById('confirm-overlay').classList.remove('show');
-      
-      // Show loader card state
-      document.getElementById('profile-main-card').style.display = 'none';
-      const loaderCard = document.getElementById('profile-loader-card');
-      loaderCard.style.display = 'block';
-      
-      const icon = document.getElementById('loader-icon');
-      const title = document.getElementById('loader-title');
-      const msg = document.getElementById('loader-message');
-
-      icon.textContent = '⏳';
-      title.textContent = 'Unsubscribing...';
-      msg.textContent = 'Deactivating your daily email account.';
-
+    });
+    document.getElementById('btn-confirm-execute')?.addEventListener('click', async () => {
+      const btn = document.getElementById('btn-confirm-execute');
+      btn.textContent = 'Cancelling...';
+      btn.disabled    = true;
       try {
         const res = await fetch(`/api/unsubscribe?token=${token}`);
         const data = await res.json();
-
+        document.getElementById('confirm-overlay').classList.remove('show');
         if (res.ok && data.success) {
-          icon.textContent = '🕊️';
-          title.textContent = 'Unsubscribed';
-          msg.innerHTML = `You have been successfully unsubscribed from Spiritual Sync.<br><br>
-            <em style="color:rgba(251,248,243,0.5);font-size:14px;">
-              "जो जाता है वह लौट भी आता है।"<br>
-              You're always welcome back on your spiritual journey. 🙏
-            </em>`;
+          document.getElementById('profile-main-card').innerHTML = `
+            <div style="text-align:center; padding:40px 20px;">
+              <div style="font-size:48px; margin-bottom:16px;">🙏</div>
+              <h3 style="font-family:var(--font-serif); font-size:24px; color:var(--text); margin-bottom:12px;">Successfully Unsubscribed</h3>
+              <p style="color:var(--text-dim); font-size:14px; line-height:1.8; margin-bottom:28px;">${data.message || 'You have been unsubscribed. May your journey continue with wisdom.'}</p>
+              <a href="/" class="btn-back">← Return Home</a>
+            </div>
+          `;
         } else {
-          icon.textContent = '❌';
-          title.textContent = 'Error';
-          msg.textContent = data.error || 'Failed to unsubscribe. Please try again.';
+          btn.textContent = 'Yes, Cancel';
+          btn.disabled = false;
         }
-      } catch (err) {
-        icon.textContent = '❌';
-        title.textContent = 'Error';
-        msg.textContent = 'Failed to connect. Please try again.';
+      } catch {
+        btn.textContent = 'Yes, Cancel';
+        btn.disabled = false;
       }
-    }
+    });
 
-    function showError(titleText, messageText) {
-      document.getElementById('profile-loader-card').style.display = 'block';
-      document.getElementById('profile-main-card').style.display = 'none';
-      document.getElementById('loader-icon').textContent = '❌';
-      document.getElementById('loader-title').textContent = titleText;
-      document.getElementById('loader-message').textContent = messageText;
-    }
+    // ── Init ───────────────────────────────────────────────
+    loadProfile();
   </script>
 </body>
 </html>

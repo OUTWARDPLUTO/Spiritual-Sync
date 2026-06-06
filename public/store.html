@@ -2,154 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Store — Spiritual Sync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080507">
+  <title>Subscribe — Spiritual Sync</title>
+  <meta name="description" content="Subscribe to daily shlokas from Bhagavad Gita, Ramayan & Upanishads with AI reflections.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    .store-container {
-      max-width: 900px;
-      margin: 140px auto 80px;
-      padding: 0 24px;
-    }
-    .store-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 32px;
-      align-items: start;
-    }
-    @media (max-width: 900px) {
-      .store-grid {
-        grid-template-columns: 1fr;
-      }
-      .store-container {
-        margin-top: 100px;
-      }
-    }
-    .selection-section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 30px;
-    }
-    .selection-title {
-      font-family: var(--font-serif);
-      font-size: 24px;
-      color: var(--cream);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(184,142,47,0.1);
-      padding-bottom: 10px;
-    }
-    .option-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .option-card {
-      background: rgba(251, 248, 243, 0.02);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 20px;
-      cursor: none;
-      transition: all 0.3s var(--ease-out);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .option-card:hover {
-      border-color: rgba(184,142,47,0.4);
-      background: rgba(251, 248, 243, 0.03);
-    }
-    .option-card.selected {
-      border-color: var(--gold);
-      background: rgba(184,142,47,0.08);
-      box-shadow: 0 0 15px rgba(184,142,47,0.1);
-    }
-    .option-info {
-      text-align: left;
-    }
-    .option-name {
-      font-family: var(--font-serif);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--gold-bright);
-    }
-    .option-desc {
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-top: 2px;
-    }
-    .option-check {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #000;
-    }
-    .option-card.selected .option-check {
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-    .store-form-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-    .summary-box {
-      background: rgba(184,142,47,0.05);
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 24px;
-      text-align: left;
-    }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-    .summary-row.total {
-      border-top: 1px solid rgba(184,142,47,0.2);
-      padding-top: 8px;
-      margin-top: 8px;
-      font-weight: 600;
-      font-size: 16px;
-      color: var(--gold-bright);
-    }
-    @media (max-width: 1024px) {
-      body, .option-card, .btn-subscribe, .time-btn, button, a {
-        cursor: auto !important;
-      }
-      button, a, select, .time-btn, .option-card, .btn-subscribe {
-        cursor: pointer !important;
-      }
-      #cursor, #cursor-glow, #cursor-follower {
-        display: none !important;
-      }
-    }
-  </style>
 </head>
-<body>
+<body class="store-body">
 
-  <!-- Custom Cursor -->
+  <!-- ═══ CUSTOM CURSOR (desktop) ═══ -->
   <div id="cursor"></div>
   <div id="cursor-glow"></div>
-  <div id="cursor-follower"></div>
 
-  <!-- Navigation -->
-  <nav id="nav" class="scrolled">
+  <!-- ═══ TOP NAV ═══ -->
+  <nav id="nav">
     <div class="nav-inner">
       <a class="nav-logo" href="/">
         <svg class="logo-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -158,182 +26,201 @@
           <path d="M12 21C12 21 3.5 19 3.5 13C3.5 8.5 7.5 6.5 12 4" />
           <path d="M12 17.5C13.3807 17.5 14.5 16.3807 14.5 15C14.5 13.6193 13.3807 12.5 12 12.5C10.6193 12.5 9.5 13.6193 9.5 15C9.5 16.3807 10.6193 17.5 12 17.5Z" />
         </svg>
-        <span>Spiritual Sync</span>
+        <span class="nav-logo-text">Spiritual Sync</span>
       </a>
-      <div class="nav-links">
-        <a href="/#preview" class="nav-link">Preview</a>
-        <a href="/#features" class="nav-link">Features</a>
-        <a href="/#faq" class="nav-link">FAQ</a>
+      <div class="nav-actions">
+        <a href="/" style="color:var(--text-dim);font-size:14px;">← Back</a>
       </div>
-      <a href="/" class="nav-cta" style="border-radius:40px;">← Home</a>
     </div>
   </nav>
 
-  <div class="store-container">
-    <div class="store-header" style="text-align: center; margin-bottom: 48px;">
-      <h1 style="font-family: var(--font-serif); font-size: 42px; color: var(--cream);">Scripture Subscription Store</h1>
-      <p style="color: var(--text-dim); margin-top: 10px;">Select your path, choose your configuration, and start align syncing today.</p>
+  <!-- ═══ STORE PAGE ═══ -->
+  <div class="store-page">
+
+    <!-- Wizard Progress Bar -->
+    <div style="padding: 16px 24px 0; max-width: 480px; margin: 0 auto; width: 100%;">
+      <div class="wizard-progress" id="wizard-progress">
+        <div class="wizard-step active" id="wstep-1">
+          <div class="wizard-step-dot">1</div>
+          <div class="wizard-step-label">Details</div>
+        </div>
+        <div class="wizard-connector" id="wconn-1"></div>
+        <div class="wizard-step" id="wstep-2">
+          <div class="wizard-step-dot">2</div>
+          <div class="wizard-step-label">Prefs</div>
+        </div>
+        <div class="wizard-connector" id="wconn-2"></div>
+        <div class="wizard-step" id="wstep-3">
+          <div class="wizard-step-dot">3</div>
+          <div class="wizard-step-label">Plan &amp; Pay</div>
+        </div>
+      </div>
     </div>
 
-    <div class="store-grid">
-      <!-- Left side: Selectors -->
-      <div style="display: flex; flex-direction: column; gap: 24px;">
-        
-        <!-- Step 1: Scripture Path -->
-        <div class="selection-section">
-          <div class="selection-title">
-            <span style="font-size: 20px;">1.</span> Choose Scripture Access
-          </div>
-          <div class="option-cards" id="scripture-options">
-            <div class="option-card selected" data-source="all">
-              <div class="option-info">
-                <div class="option-name">Complete Path (All Scriptures)</div>
-                <div class="option-desc">Daily rotation of Bhagavad Gita, Valmiki Ramayan, and Upanishads.</div>
-              </div>
-              <div class="option-check">✓</div>
-            </div>
-            <div class="option-card" data-source="gita">
-              <div class="option-info">
-                <div class="option-name">Bhagavad Gita Focus</div>
-                <div class="option-desc">Receive verses exclusively from the Bhagavad Gita daily.</div>
-              </div>
-              <div class="option-check"></div>
-            </div>
-            <div class="option-card" data-source="ramayan">
-              <div class="option-info">
-                <div class="option-name">Valmiki Ramayan Focus</div>
-                <div class="option-desc">Receive verses exclusively from the Valmiki Ramayan daily.</div>
-              </div>
-              <div class="option-check"></div>
-            </div>
-            <div class="option-card" data-source="upanishad">
-              <div class="option-info">
-                <div class="option-name">Upanishads Focus</div>
-                <div class="option-desc">Receive philosophical lessons exclusively from the Upanishads daily.</div>
-              </div>
-              <div class="option-check"></div>
-            </div>
-          </div>
-        </div>
+    <!-- Wizard Panels -->
+    <div class="wizard-panels" id="wizard-panels">
 
-        <!-- Step 2: Plan Selection -->
-        <div class="selection-section">
-          <div class="selection-title">
-            <span style="font-size: 20px;">2.</span> Choose Payment Plan
+      <!-- ─── STEP 1: Name & Email ─── -->
+      <div class="wizard-panel active" id="panel-1">
+        <div style="max-width: 480px; margin: 0 auto; width: 100%;">
+          <div class="hero-om-badge" style="margin-bottom:20px;">ॐ</div>
+          <h2 class="wizard-title">Begin Your Journey</h2>
+          <p class="wizard-subtitle">Ancient wisdom, delivered daily to your inbox. Let's start with your details.</p>
+
+          <div class="input-group">
+            <label class="input-label" for="sub-name">Your Name</label>
+            <input type="text" class="store-input" id="sub-name"
+              placeholder="e.g. Arjun Sharma"
+              autocomplete="name"
+              inputmode="text">
           </div>
-          <div class="option-cards" id="plan-options">
-            <!-- Rendered dynamically based on Step 1 selection -->
+
+          <div class="input-group">
+            <label class="input-label" for="sub-email">Email Address</label>
+            <input type="email" class="store-input" id="sub-email"
+              placeholder="name@example.com"
+              autocomplete="email"
+              inputmode="email">
           </div>
         </div>
       </div>
 
-      <!-- Right side: Form & Checkout -->
-      <div class="store-form-card">
-        <div style="font-family: var(--font-serif); font-size: 24px; color: var(--cream); margin-bottom: 20px; text-align: center;">
-          Checkout Details
-        </div>
-        <form id="store-subscribe-form">
-          <div class="form-field">
-            <label for="sub-name">Your Name</label>
-            <div class="input-wrap">
-              <input type="text" id="sub-name" placeholder="Enter your name" required autocomplete="name">
-              <div class="input-line"></div>
+      <!-- ─── STEP 2: Preferences ─── -->
+      <div class="wizard-panel" id="panel-2">
+        <div style="max-width: 480px; margin: 0 auto; width: 100%;">
+          <h2 class="wizard-title">Your Preferences</h2>
+          <p class="wizard-subtitle">Choose your scripture focus, language, and the time you want to receive wisdom.</p>
+
+          <!-- Scripture Focus -->
+          <div class="input-group">
+            <label class="input-label">Scripture Focus</label>
+            <div class="scripture-options" id="scripture-options">
+              <div class="scripture-card active" data-source="all">
+                <span class="scripture-card-icon">📚</span>
+                <div class="scripture-card-name">Complete Path</div>
+                <div class="scripture-card-sub">All scriptures</div>
+              </div>
+              <div class="scripture-card" data-source="gita">
+                <span class="scripture-card-icon">📖</span>
+                <div class="scripture-card-name">Bhagavad Gita</div>
+                <div class="scripture-card-sub">Focus plan</div>
+              </div>
+              <div class="scripture-card" data-source="ramayan">
+                <span class="scripture-card-icon">🏹</span>
+                <div class="scripture-card-name">Valmiki Ramayan</div>
+                <div class="scripture-card-sub">Focus plan</div>
+              </div>
+              <div class="scripture-card" data-source="upanishad">
+                <span class="scripture-card-icon">🕉️</span>
+                <div class="scripture-card-name">Upanishads</div>
+                <div class="scripture-card-sub">Focus plan</div>
+              </div>
             </div>
           </div>
 
-          <div class="form-field">
-            <label for="sub-email">Email Address</label>
-            <div class="input-wrap">
-              <input type="email" id="sub-email" placeholder="your@email.com" required autocomplete="email">
-              <div class="input-line"></div>
-            </div>
+          <!-- Language -->
+          <div class="input-group">
+            <label class="input-label" for="sub-lang">Language Preference</label>
+            <select class="store-select" id="sub-lang">
+              <option value="both">Both Hindi &amp; English</option>
+              <option value="english">English Only</option>
+              <option value="hindi">Hindi Only</option>
+            </select>
           </div>
 
-          <div class="form-field">
-            <label for="sub-lang">Language Preference</label>
-            <div class="input-wrap">
-              <select id="sub-lang" style="width:100%; background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:12px; padding:14px; color:var(--cream); outline:none;">
-                <option value="both" style="background:var(--bg2);">Both (Sanskrit + English + Hindi)</option>
-                <option value="english" style="background:var(--bg2);">English Only (Sanskrit + English)</option>
-                <option value="hindi" style="background:var(--bg2);">Hindi Only (Sanskrit + Hindi)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-field">
-            <label>Delivery Time <span class="label-sub">(IST)</span></label>
-            <div class="time-grid" style="grid-template-columns: repeat(2, 1fr); gap: 8px;">
-              <button type="button" class="time-btn" data-hour="4">
-                <span class="time-main">4:00 AM</span>
-                <span class="time-name">Brahma Muhurta</span>
+          <!-- Time -->
+          <div class="input-group">
+            <label class="input-label">Daily Delivery Time (IST)</label>
+            <div class="time-grid" id="time-grid">
+              <button class="time-btn" type="button" data-hour="4">
+                <span class="time-btn-icon">🌙</span>
+                <span class="time-btn-label">4 AM</span>
               </button>
-              <button type="button" class="time-btn" data-hour="5">
-                <span class="time-main">5:00 AM</span>
-                <span class="time-name">Early Dawn</span>
+              <button class="time-btn" type="button" data-hour="5">
+                <span class="time-btn-icon">🌅</span>
+                <span class="time-btn-label">5 AM</span>
               </button>
-              <button type="button" class="time-btn active" data-hour="6">
-                <span class="time-main">6:00 AM</span>
-                <span class="time-name">Sunrise</span>
+              <button class="time-btn active" type="button" data-hour="6">
+                <span class="time-btn-icon">🌄</span>
+                <span class="time-btn-label">6 AM</span>
               </button>
-              <button type="button" class="time-btn" data-hour="7">
-                <span class="time-main">7:00 AM</span>
-                <span class="time-name">Morning</span>
+              <button class="time-btn" type="button" data-hour="7">
+                <span class="time-btn-icon">☀️</span>
+                <span class="time-btn-label">7 AM</span>
               </button>
-              <button type="button" class="time-btn" data-hour="8">
-                <span class="time-main">8:00 AM</span>
-                <span class="time-name">Late Morning</span>
+              <button class="time-btn" type="button" data-hour="8">
+                <span class="time-btn-icon">🌞</span>
+                <span class="time-btn-label">8 AM</span>
               </button>
-              <button type="button" class="time-btn" data-hour="12">
-                <span class="time-main">12:00 PM</span>
-                <span class="time-name">Noon</span>
+              <button class="time-btn" type="button" data-hour="12">
+                <span class="time-btn-icon">🕛</span>
+                <span class="time-btn-label">12 PM</span>
               </button>
-              <button type="button" class="time-btn" data-hour="18">
-                <span class="time-main">6:00 PM</span>
-                <span class="time-name">Evening</span>
+              <button class="time-btn" type="button" data-hour="18">
+                <span class="time-btn-icon">🌆</span>
+                <span class="time-btn-label">6 PM</span>
               </button>
-              <button type="button" class="time-btn" data-hour="21">
-                <span class="time-main">9:00 PM</span>
-                <span class="time-name">Night</span>
+              <button class="time-btn" type="button" data-hour="21">
+                <span class="time-btn-icon">🌃</span>
+                <span class="time-btn-label">9 PM</span>
               </button>
             </div>
             <input type="hidden" id="selected-hour" value="6">
           </div>
+        </div>
+      </div>
 
-          <!-- Checkout summary -->
-          <div class="summary-box">
+      <!-- ─── STEP 3: Plan & Pay ─── -->
+      <div class="wizard-panel" id="panel-3">
+        <div style="max-width: 480px; margin: 0 auto; width: 100%;">
+          <h2 class="wizard-title">Choose Your Plan</h2>
+          <p class="wizard-subtitle">Start free. Upgrade whenever you're ready.</p>
+
+          <!-- Plan options (populated by JS) -->
+          <div class="plan-options-list" id="plan-options"></div>
+
+          <!-- Order Summary -->
+          <div class="checkout-summary" id="checkout-summary" style="margin-top:24px;">
             <div class="summary-row">
-              <span>Scripture:</span>
-              <span id="summary-scripture">All rotating</span>
+              <span class="summary-label">Name</span>
+              <span class="summary-value" id="summary-name">—</span>
             </div>
             <div class="summary-row">
-              <span>Duration:</span>
-              <span id="summary-duration">30 Days</span>
+              <span class="summary-label">Scripture</span>
+              <span class="summary-value" id="summary-scripture">All Scriptures</span>
             </div>
-            <div class="summary-row total">
-              <span>Total Amount:</span>
-              <span id="summary-price">₹99</span>
+            <div class="summary-row">
+              <span class="summary-label">Delivery</span>
+              <span class="summary-value" id="summary-hour">6 AM IST</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Total</span>
+              <span class="summary-value summary-total" id="summary-price">Free</span>
             </div>
           </div>
 
-          <button type="submit" class="btn-subscribe magnetic" id="store-subscribe-btn">
-            <span id="btn-text">Confirm & Pay 🪷</span>
-            <div class="btn-shimmer"></div>
+          <input type="hidden" id="selected-plan" value="trial">
+          <input type="hidden" id="current-scripture" value="all">
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Sticky Bottom CTA ─── -->
+    <div class="wizard-bottom">
+      <div style="max-width: 480px; margin: 0 auto;">
+        <button class="btn-wizard-next" id="wizard-next-btn" onclick="wizardNext()">
+          <span id="wizard-btn-text">Continue →</span>
+        </button>
+        <div style="text-align:center; margin-top:12px;">
+          <button id="wizard-back-btn" onclick="wizardBack()" style="display:none; color:var(--text-faint); font-size:13px; background:none; border:none; cursor:pointer; padding:8px;">
+            ← Go Back
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container" style="text-align:center;">
-      <p style="font-family: var(--font-serif); font-size: 20px; color: var(--gold-bright); margin-bottom: 8px;">Spiritual Sync</p>
-      <p style="color:var(--text-faint); font-size:12px;">© 2025 Spiritual Sync · All checkouts are secure 🙏</p>
-    </div>
-  </footer>
-
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <script src="app.js"></script>
   <script src="store.js"></script>
 </body>
 </html>

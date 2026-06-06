@@ -18,8 +18,9 @@ async function main() {
     process.exit(1);
   }
 
-  const shloka = shlokas.shlokas[0]; // Always use first shloka for testing
-  console.log(`📖 Using shloka: ${shloka.reference}`);
+  const randomIdx = Math.floor(Math.random() * shlokas.shlokas.length);
+  const shloka = shlokas.shlokas[randomIdx];
+  console.log(`📖 Using random shloka #${shloka.id}: ${shloka.reference}`);
 
   const aiContent = await getEnrichedContent(shloka);
   console.log('✨ AI content generated');
