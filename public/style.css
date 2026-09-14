@@ -8,23 +8,33 @@
 
 /* ─── Design Tokens ─────────────────────────────────────── */
 :root {
-  --bg:          #080507;
-  --bg2:         #0F0C0A;
-  --bg3:         #161210;
-  --surface:     rgba(255,255,255,0.03);
-  --surface2:    rgba(255,255,255,0.06);
-  --gold:        #C9A84C;
-  --gold-light:  #EAD292;
-  --gold-dim:    #8A6A20;
-  --gold-glow:   rgba(201,168,76,0.18);
-  --gold-glow2:  rgba(201,168,76,0.08);
-  --crimson:     #7A1818;
-  --crimson2:    #9E2020;
-  --border:      rgba(201,168,76,0.15);
-  --border2:     rgba(201,168,76,0.30);
-  --text:        #F2E8CC;
-  --text-dim:    rgba(242,232,204,0.55);
-  --text-faint:  rgba(242,232,204,0.22);
+  /* ── Backgrounds: warm candlelit dark, not cold black ── */
+  --bg:          #1C1710;
+  --bg2:         #231D12;
+  --bg3:         #2C2518;
+  --surface:     rgba(255,245,220,0.05);
+  --surface2:    rgba(255,245,220,0.09);
+
+  /* ── Gold — slightly brighter for contrast on lifted bg ── */
+  --gold:        #D4A843;
+  --gold-light:  #F0D898;
+  --gold-dim:    #9A7828;
+  --gold-glow:   rgba(212,168,67,0.22);
+  --gold-glow2:  rgba(212,168,67,0.10);
+
+  /* ── Crimson — warmer, more readable ── */
+  --crimson:     #8B1F1F;
+  --crimson2:    #B02828;
+
+  /* ── Borders — more visible on lighter bg ── */
+  --border:      rgba(212,168,67,0.20);
+  --border2:     rgba(212,168,67,0.38);
+
+  /* ── Text — warm cream, high contrast ── */
+  --text:        #F5EDD8;
+  --text-dim:    rgba(245,237,216,0.68);
+  --text-faint:  rgba(245,237,216,0.35);
+
   --radius-sm:   12px;
   --radius:      18px;
   --radius-lg:   24px;
@@ -164,7 +174,7 @@ input, select, textarea { font-family: inherit; }
   transition: background 0.4s, backdrop-filter 0.4s, border-bottom 0.4s;
 }
 #nav.scrolled {
-  background: rgba(8,5,7,0.85);
+  background: rgba(28,23,16,0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
@@ -263,7 +273,7 @@ input, select, textarea { font-family: inherit; }
   display: flex;
   position: fixed; bottom: 0; left: 0; right: 0;
   height: var(--bottom-h);
-  background: rgba(10,8,9,0.92);
+  background: rgba(28,23,16,0.94);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--border);
