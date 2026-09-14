@@ -2620,3 +2620,371 @@ section { padding: 72px 0; }
   .wisdom-shloka-devanagari { font-size: 18px; }
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   /POLISH — Emil Kowalski-level micro-interaction refinements
+   Spring physics · Impeccable detail · Intentional taste
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Spring easing tokens ──────────────────────────────── */
+:root {
+  --spring-snappy:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-gentle:   cubic-bezier(0.22, 1.2, 0.36, 1);
+  --spring-bouncy:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart:  cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ─── OM Badge — spring entrance + richer glow ring ────── */
+.hero-om-badge {
+  transition: transform 0.5s var(--spring-snappy), box-shadow 0.4s var(--ease-out-expo);
+  cursor: default;
+  will-change: transform;
+}
+.hero-om-badge:hover {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow:
+    0 0 0 8px rgba(201,168,76,0.08),
+    0 0 0 20px rgba(201,168,76,0.04),
+    0 0 60px rgba(201,168,76,0.25);
+}
+
+/* ─── Nav logo — subtle lift with glow ─────────────────── */
+.nav-logo {
+  transition: opacity 0.2s, transform 0.3s var(--spring-gentle);
+}
+.nav-logo:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+.nav-logo .logo-svg {
+  transition: filter 0.3s var(--ease-out-expo), transform 0.4s var(--spring-snappy);
+}
+.nav-logo:hover .logo-svg {
+  filter: drop-shadow(0 0 12px rgba(201,168,76,0.6));
+  transform: rotate(-8deg) scale(1.1);
+}
+
+/* ─── Nav links — polished underline reveal ─────────────── */
+.nav-link {
+  transition: color 0.2s var(--ease-out-expo);
+}
+.nav-link::after {
+  transition: width 0.35s var(--spring-gentle), opacity 0.2s;
+  opacity: 0;
+}
+.nav-link:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* ─── Nav CTA — spring press feel ──────────────────────── */
+.nav-cta {
+  transition: transform 0.25s var(--spring-snappy), box-shadow 0.3s var(--ease-out-expo), background-position 0.4s var(--ease);
+}
+.nav-cta:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(201,168,76,0.25), 0 2px 8px rgba(122,24,24,0.3);
+}
+.nav-cta:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.1s;
+}
+
+/* ─── Hero pills — staggered hover lift ─────────────────── */
+.pill {
+  transition: transform 0.3s var(--spring-snappy), background 0.2s, border-color 0.2s, box-shadow 0.3s;
+  cursor: default;
+}
+.pill:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: var(--gold-glow);
+  border-color: var(--gold-dim);
+  box-shadow: 0 4px 16px var(--gold-glow2);
+}
+
+/* ─── Primary button — spring scale + shimmer speed ────── */
+.btn-primary {
+  transition:
+    transform 0.3s var(--spring-snappy),
+    box-shadow 0.3s var(--ease-out-expo),
+    background-position 0.5s var(--ease);
+}
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 16px 40px rgba(201,168,76,0.22),
+    0 6px 16px rgba(122,24,24,0.35),
+    0 0 0 1px rgba(201,168,76,0.2);
+}
+.btn-primary:active {
+  transform: scale(0.97) translateY(1px);
+  transition-duration: 0.08s;
+}
+.btn-shimmer {
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* ─── Outline button — border glow on hover ─────────────── */
+.btn-outline {
+  transition:
+    transform 0.3s var(--spring-snappy),
+    border-color 0.25s,
+    color 0.25s,
+    box-shadow 0.3s var(--ease-out-expo),
+    background 0.3s;
+}
+.btn-outline:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,76,0.05);
+  box-shadow: 0 8px 24px rgba(201,168,76,0.1), 0 0 0 1px rgba(201,168,76,0.15);
+}
+.btn-outline:active {
+  transform: scale(0.97);
+  transition-duration: 0.08s;
+}
+
+/* ─── Marquee — pause on hover ──────────────────────────── */
+.marquee-wrap:hover .marquee-content {
+  animation-play-state: paused;
+}
+.marquee-content span {
+  transition: color 0.2s, letter-spacing 0.3s var(--ease-out-quart);
+}
+.marquee-content span:hover {
+  color: var(--gold-light);
+  letter-spacing: 3px;
+}
+
+/* ─── Section tag — glow pulse on entrance ──────────────── */
+.section-tag {
+  transition: box-shadow 0.4s var(--ease-out-expo), transform 0.3s var(--spring-gentle);
+}
+[data-animate="fade-up"].is-visible .section-tag {
+  animation: sectionTagReveal 0.6s var(--spring-gentle) both;
+}
+@keyframes sectionTagReveal {
+  from { opacity: 0; transform: translateY(8px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Shloka card — polished tilt + glow ────────────────── */
+.shloka-3d-card {
+  transition:
+    transform 0.4s var(--spring-gentle),
+    box-shadow 0.4s var(--ease-out-expo);
+}
+.shloka-3d-card:hover {
+  box-shadow:
+    0 32px 64px rgba(0,0,0,0.5),
+    0 0 0 1px var(--border2),
+    0 0 80px rgba(201,168,76,0.08);
+}
+
+/* ─── Feature cards — spring lift ───────────────────────── */
+.feat-card {
+  transition:
+    transform 0.35s var(--spring-snappy),
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.35s var(--ease-out-expo);
+  cursor: default;
+}
+.feat-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  background: rgba(255,255,255,0.06);
+  border-color: var(--border2);
+  box-shadow:
+    0 20px 48px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(201,168,76,0.15),
+    0 0 40px rgba(201,168,76,0.06);
+}
+
+/* ─── Plan cards — premium spring lift ──────────────────── */
+.plan-card {
+  transition:
+    transform 0.35s var(--spring-snappy),
+    border-color 0.3s,
+    box-shadow 0.35s var(--ease-out-expo),
+    background 0.3s;
+}
+.plan-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: var(--gold-dim);
+  box-shadow:
+    0 24px 56px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(201,168,76,0.2),
+    0 0 60px rgba(201,168,76,0.08);
+}
+
+/* ─── Mood chips — spring bounce ────────────────────────── */
+.mood-chip {
+  transition:
+    transform 0.3s var(--spring-snappy),
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.3s var(--ease-out-expo);
+  -webkit-tap-highlight-color: transparent;
+}
+.mood-chip:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+.mood-chip:active {
+  transform: scale(0.95);
+  transition-duration: 0.08s;
+}
+
+/* ─── Soul textarea — spring focus ring ──────────────────── */
+.soul-textarea {
+  transition:
+    border-color 0.3s var(--ease-out-expo),
+    box-shadow 0.4s var(--ease-out-expo),
+    background 0.3s;
+}
+.soul-textarea:focus {
+  border-color: rgba(201,168,76,0.5);
+  box-shadow:
+    0 0 0 3px rgba(201,168,76,0.08),
+    0 0 0 1px rgba(201,168,76,0.2),
+    0 8px 32px rgba(201,168,76,0.06);
+}
+
+/* ─── Seek button — premium spring press ────────────────── */
+.soul-seek-btn {
+  transition:
+    transform 0.3s var(--spring-snappy),
+    box-shadow 0.3s var(--ease-out-expo),
+    opacity 0.2s;
+}
+.soul-seek-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 12px 40px rgba(122,24,24,0.55),
+    0 4px 16px rgba(201,168,76,0.2),
+    0 0 0 1px rgba(201,168,76,0.2);
+}
+.soul-seek-btn:active:not(:disabled) {
+  transform: scale(0.96) translateY(1px);
+  transition-duration: 0.08s;
+}
+
+/* ─── Wisdom card — polished reveal animation ────────────── */
+.wisdom-card {
+  animation: wisdomCardIn 0.65s var(--spring-gentle) both;
+}
+@keyframes wisdomCardIn {
+  0%   { opacity: 0; transform: translateY(24px) scale(0.97); filter: blur(4px); }
+  60%  { filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Wisdom loading OM — better spring pulse ───────────── */
+.wisdom-loading-om {
+  animation: wisdomOmPulse 1.8s var(--spring-gentle) infinite;
+}
+@keyframes wisdomOmPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(201,168,76,0.3)); }
+  50%       { transform: scale(1.12); filter: drop-shadow(0 0 24px rgba(201,168,76,0.6)); }
+}
+
+/* ─── Source badge — subtle entrance ────────────────────── */
+.wisdom-source-badge {
+  transition: transform 0.3s var(--spring-snappy), box-shadow 0.3s;
+  cursor: default;
+}
+.wisdom-source-badge:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 16px var(--gold-glow2);
+}
+
+/* ─── Wisdom reflection — subtle left border accent ─────── */
+.wisdom-reflection-wrap {
+  border-left: 3px solid var(--gold-dim);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  transition: border-color 0.3s, background 0.3s;
+}
+.wisdom-reflection-wrap:hover {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.06);
+}
+
+/* ─── Practice box — crimson left accent ────────────────── */
+.wisdom-practice-wrap {
+  border-left: 3px solid var(--crimson2);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  transition: border-color 0.3s, background 0.3s;
+}
+.wisdom-practice-wrap:hover {
+  border-color: #C53030;
+  background: rgba(122,24,24,0.12);
+}
+
+/* ─── Bottom nav active — spring scale ───────────────────── */
+.bnav-item {
+  transition: color 0.2s var(--ease-out-expo), transform 0.25s var(--spring-snappy);
+}
+.bnav-item:active {
+  transform: scale(0.9);
+}
+.bnav-icon {
+  transition: transform 0.3s var(--spring-snappy), filter 0.2s;
+}
+.bnav-item.active .bnav-icon {
+  transform: scale(1.2) translateY(-2px);
+}
+
+/* ─── Scroll indicator — smoother float ─────────────────── */
+.scroll-indicator {
+  animation: scrollIndicatorFade 1s var(--ease-out-expo) 2s both;
+}
+@keyframes scrollIndicatorFade {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─── Global focus ring — branded ───────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(201,168,76,0.6);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Text selection — branded ───────────────────────────── */
+::selection {
+  background: rgba(201,168,76,0.25);
+  color: var(--gold-light);
+}
+
+/* ─── Reduced motion — respect OS preference ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Wisdom subscribe button in card ────────────────────── */
+.wisdom-subscribe-btn {
+  transition:
+    transform 0.3s var(--spring-snappy),
+    box-shadow 0.3s var(--ease-out-expo) !important;
+}
+.wisdom-subscribe-btn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+}
+.wisdom-subscribe-btn:active {
+  transform: scale(0.96) !important;
+  transition-duration: 0.08s !important;
+}
+

@@ -879,3 +879,173 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })();
 
+
+// ═══════════════════════════════════════════════════════════
+// /POLISH — Emil Kowalski-level micro-interaction layer
+// Spring animations · Impeccable interactions · Taste
+// ═══════════════════════════════════════════════════════════
+
+(function initPolish() {
+
+  // ─── Staggered pill entrance ───────────────────────────
+  const pills = document.querySelectorAll('.pill');
+  pills.forEach((pill, i) => {
+    pill.style.opacity = '0';
+    pill.style.transform = 'translateY(12px) scale(0.94)';
+    pill.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+    setTimeout(() => {
+      pill.style.opacity = '1';
+      pill.style.transform = 'translateY(0) scale(1)';
+    }, 600 + i * 80);
+  });
+
+  // ─── Mood chips — staggered entrance when in view ──────
+  function animateMoodChips() {
+    const chips = document.querySelectorAll('.mood-chip');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        chips.forEach((chip, i) => {
+          chip.style.opacity = '0';
+          chip.style.transform = 'translateY(16px) scale(0.92)';
+          chip.style.transition = `opacity 0.45s cubic-bezier(0.16,1,0.3,1) ${i * 60}ms, transform 0.45s cubic-bezier(0.34,1.56,0.64,1) ${i * 60}ms`;
+          setTimeout(() => {
+            chip.style.opacity = '1';
+            chip.style.transform = 'translateY(0) scale(1)';
+          }, i * 60);
+        });
+        obs.disconnect();
+      });
+    }, { threshold: 0.3 });
+    const container = document.querySelector('.mood-chips');
+    if (container) obs.observe(container);
+  }
+  animateMoodChips();
+
+  // ─── Button press feedback (haptic-like scale) ──────────
+  document.querySelectorAll('.btn-primary, .btn-outline, .soul-seek-btn, .nav-cta').forEach(btn => {
+    btn.addEventListener('pointerdown', () => {
+      btn.style.transition = 'transform 0.08s cubic-bezier(0.25,1,0.5,1)';
+      btn.style.transform = 'scale(0.96)';
+    });
+    btn.addEventListener('pointerup', () => {
+      btn.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1)';
+      btn.style.transform = '';
+    });
+    btn.addEventListener('pointerleave', () => {
+      btn.style.transition = 'transform 0.4s cubic-bezier(0.16,1,0.3,1)';
+      btn.style.transform = '';
+    });
+  });
+
+  // ─── Wisdom card field — typewriter-style reveal ────────
+  function animateWisdomText(el, text, delayMs) {
+    if (!el) return;
+    el.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i >= text.length) { clearInterval(interval); return; }
+      el.textContent += text[i];
+      i++;
+    }, delayMs);
+  }
+
+  // Override the seekBtn click to add typewriter on reflection/practice
+  const origSeek = document.getElementById('soul-seek-btn');
+  if (origSeek) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(m => {
+        if (m.target.id === 'wisdom-card' && !m.target.hidden) {
+          const reflEl = document.getElementById('wisdom-reflection');
+          const practEl = document.getElementById('wisdom-practice');
+          if (reflEl && reflEl.textContent) {
+            const reflText = reflEl.textContent;
+            const practText = practEl ? practEl.textContent : '';
+            animateWisdomText(reflEl, reflText, 18);
+            setTimeout(() => {
+              if (practEl) animateWisdomText(practEl, practText, 20);
+            }, 600);
+          }
+        }
+      });
+    });
+    const cardEl = document.getElementById('wisdom-card');
+    if (cardEl) observer.observe(cardEl, { attributes: true, attributeFilter: ['hidden'] });
+  }
+
+  // ─── Soul section entrance — scroll-triggered ───────────
+  function initSoulEntrance() {
+    const soulSection = document.getElementById('soul-check');
+    if (!soulSection) return;
+
+    const header = soulSection.querySelector('.soul-check-header');
+    const inputWrap = soulSection.querySelector('.soul-input-wrap');
+    const chips = soulSection.querySelector('.mood-chips');
+    const cta = soulSection.querySelector('.soul-cta-wrap');
+
+    [header, inputWrap, chips, cta].forEach(el => {
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'none';
+    });
+
+    const sectionObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      [header, inputWrap, chips, cta].forEach((el, i) => {
+        if (!el) return;
+        setTimeout(() => {
+          el.style.transition = `opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.34,1.56,0.64,1)`;
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+      sectionObs.disconnect();
+    }, { threshold: 0.15 });
+
+    sectionObs.observe(soulSection);
+  }
+  initSoulEntrance();
+
+  // ─── Scroll-linked nav border opacity ──────────────────
+  const nav = document.getElementById('nav');
+  if (nav) {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const progress = Math.min(window.scrollY / 80, 1);
+        nav.style.setProperty('--nav-opacity', progress.toFixed(2));
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  // ─── Floating symbols — mouse parallax depth ───────────
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', (e) => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+    document.querySelectorAll('.floating-symbol').forEach((sym, i) => {
+      const depth = (i % 3 + 1) * 4;
+      sym.style.transform = `translate(${mx * depth}px, ${my * depth}px)`;
+    });
+  }, { passive: true });
+
+  // ─── Wisdom result — smooth scroll into view ───────────
+  const wisdomResult = document.getElementById('wisdom-result');
+  if (wisdomResult) {
+    const cardObs = new MutationObserver(() => {
+      const card = document.getElementById('wisdom-card');
+      if (card && !card.hidden) {
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 200);
+      }
+    });
+    cardObs.observe(wisdomResult, { childList: true, subtree: true, attributes: true });
+  }
+
+})();
+
