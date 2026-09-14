@@ -38,6 +38,11 @@ app.use((req, res, next) => {
 });
 
 // ────────────────────────────────────────────────
+
+// Health Check (required by Render)
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', app: process.env.APP_NAME || 'Spiritual Sync', ts: new Date().toISOString() });
+});
 // Admin Auth Middleware
 // ────────────────────────────────────────────────
 function requireAdmin(req, res, next) {
