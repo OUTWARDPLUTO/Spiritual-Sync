@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -192,6 +192,124 @@
     </div>
   </div>
 
+
+  <!-- ═══ SOUL CHECK — How Are You Feeling? ═══ -->
+  <section class="soul-check-section" id="soul-check">
+    <div class="soul-check-bg">
+      <div class="soul-orb soul-orb-1"></div>
+      <div class="soul-orb soul-orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="soul-check-inner">
+
+        <!-- Header -->
+        <div class="soul-check-header" data-animate="fade-up">
+          <div class="section-tag">🫀 Inner Compass</div>
+          <h2 class="section-title">What's on your heart<br><span class="gradient-text">today?</span></h2>
+          <p class="section-sub">Share how you're feeling — and receive a real-time shloka chosen just for this moment.</p>
+        </div>
+
+        <!-- Input Area -->
+        <div class="soul-input-wrap" data-animate="fade-up">
+          <textarea
+            id="soul-feeling-input"
+            class="soul-textarea"
+            placeholder="Tell me how you're feeling... (e.g. anxious about tomorrow, feeling lost, can't let go of someone, overwhelmed at work)"
+            maxlength="500"
+            rows="3"
+          ></textarea>
+          <div class="soul-char-count"><span id="soul-char-num">0</span>/500</div>
+        </div>
+
+        <!-- Mood Chips -->
+        <div class="mood-chips" data-animate="fade-up">
+          <button class="mood-chip" data-mood="I'm feeling anxious and overwhelmed about the future">😟 Anxious</button>
+          <button class="mood-chip" data-mood="I'm heartbroken and struggling to move on">💔 Heartbroken</button>
+          <button class="mood-chip" data-mood="I feel angry and cannot control my emotions">😤 Angry</button>
+          <button class="mood-chip" data-mood="I feel completely lost and don't know my purpose">😔 Lost</button>
+          <button class="mood-chip" data-mood="I am feeling deeply grateful and at peace today">🌟 Grateful</button>
+          <button class="mood-chip" data-mood="I am exhausted and completely overwhelmed by life">😰 Overwhelmed</button>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="soul-cta-wrap" data-animate="fade-up">
+          <button class="soul-seek-btn" id="soul-seek-btn">
+            <span class="soul-btn-icon">🪷</span>
+            <span class="soul-btn-text">Seek Wisdom</span>
+            <div class="soul-btn-ripple"></div>
+          </button>
+        </div>
+
+        <!-- Result Card -->
+        <div class="wisdom-result" id="wisdom-result" hidden>
+
+          <!-- Loading State -->
+          <div class="wisdom-loading" id="wisdom-loading">
+            <div class="wisdom-loading-om">ॐ</div>
+            <p class="wisdom-loading-text">The scriptures are speaking to you...</p>
+            <div class="wisdom-shimmer-bar"><div class="wisdom-shimmer-progress"></div></div>
+          </div>
+
+          <!-- Wisdom Card -->
+          <div class="wisdom-card" id="wisdom-card" hidden>
+            <div class="wisdom-card-glow"></div>
+
+            <!-- Source Badge -->
+            <div class="wisdom-source-badge">
+              <span class="wisdom-theme-emoji" id="wisdom-emoji">🌊</span>
+              <span class="wisdom-source-text" id="wisdom-source">Bhagavad Gita · 2.47</span>
+            </div>
+
+            <!-- Devanagari Shloka -->
+            <div class="wisdom-shloka-devanagari" id="wisdom-devanagari">
+              कर्मण्येवाधिकारस्ते...
+            </div>
+
+            <!-- Transliteration -->
+            <div class="wisdom-transliteration" id="wisdom-transliteration">
+              karmaṇy-evādhikāras te...
+            </div>
+
+            <!-- Divider -->
+            <div class="wisdom-divider"><span>✦</span></div>
+
+            <!-- Meaning -->
+            <div class="wisdom-meaning-label">Meaning</div>
+            <p class="wisdom-meaning" id="wisdom-meaning">...</p>
+
+            <!-- Reflection -->
+            <div class="wisdom-reflection-wrap">
+              <div class="wisdom-reflection-label">🌸 For You</div>
+              <p class="wisdom-reflection" id="wisdom-reflection">...</p>
+            </div>
+
+            <!-- Practice -->
+            <div class="wisdom-practice-wrap">
+              <div class="wisdom-practice-label">💫 Today's Practice</div>
+              <p class="wisdom-practice" id="wisdom-practice">...</p>
+            </div>
+
+            <!-- Subtle CTA -->
+            <div class="wisdom-card-cta">
+              <p>Receive personalized wisdom like this every morning</p>
+              <button class="btn-primary wisdom-subscribe-btn" onclick="window.location.href='/store'">
+                <span class="btn-text">Begin Free Trial</span>
+                <span class="btn-icon">→</span>
+                <div class="btn-shimmer"></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Error State -->
+          <div class="wisdom-error" id="wisdom-error" hidden>
+            <span class="wisdom-error-icon">🙏</span>
+            <p id="wisdom-error-text">The universe is momentarily quiet. Please try again.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- ═══ SHLOKA PREVIEW ═══ -->
   <section class="preview-section" id="preview">
     <div class="container">

@@ -1,4 +1,4 @@
-// server.js — Express API server for Spiritual Sync
+﻿// server.js — Express API server for Spiritual Sync
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
@@ -62,6 +62,81 @@ function requireAdmin(req, res, next) {
 // PUBLIC ROUTES
 // ════════════════════════════════════════════════
 
+
+// ─── Rate limiter for /api/wisdom (1 req per 10s per IP) ─────────────────
+const wisdomRateMap = new Map();
+function wisdomRateLimit(req, res, next) {
+  const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress || 'unknown';
+  const now = Date.now();
+  const last = wisdomRateMap.get(ip) || 0;
+  if (now - last < 10000) {
+    return res.status(429).json({ error: 'Please wait a moment before asking again.' });
+  }
+  wisdomRateMap.set(ip, now);
+  if (wisdomRateMap.size > 500) {
+    for (const [k, v] of wisdomRateMap) {
+      if (now - v > 60000) wisdomRateMap.delete(k);
+    }
+  }
+  next();
+}
+
+// POST /api/wisdom — Real-time Gemini AI wisdom based on user feeling
+app.post('/api/wisdom', wisdomRateLimit, async (req, res) => {
+  const { feeling } = req.body;
+  if (!feeling || typeof feeling !== 'string' || feeling.trim().length < 3) {
+    return res.status(400).json({ error: 'Please share how you are feeling.' });
+  }
+  if (feeling.trim().length > 500) {
+    return res.status(400).json({ error: 'Please keep your message under 500 characters.' });
+  }
+  try {
+    const { GoogleGenerativeAI } = require('@google/generative-ai');
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const userFeeling = feeling.trim();
+    const prompt = [
+      'You are a deeply knowledgeable spiritual guide — Bhagavad Gita, Ramayana, Upanishads, Yoga Sutras, Chanakya Niti.',
+      '',
+      'A person has shared how they are feeling: "' + userFeeling + '"',
+      '',
+      'Select the single most relevant authentic shloka from Indian scriptures for this feeling.',
+      'Write a heartfelt personalized reflection for THIS specific person.',
+      '',
+      'Respond ONLY with valid JSON (no markdown, no code blocks, raw JSON only):',
+      '{',
+      '  "source": "Bhagavad Gita",',
+      '  "reference": "2.47",',
+      '  "shloka_devanagari": "full verse in devanagari",',
+      '  "transliteration": "romanized transliteration",',
+      '  "meaning": "one sentence plain English meaning",',
+      '  "theme_emoji": "emoji matching the emotional theme",',
+      '  "reflection": "2-3 sentences directly addressing their feeling using you language, warm and personal",',
+      '  "practice": "one concrete specific action they can take TODAY for their feeling"',
+      '}',
+      '',
+      'Rules: Use only authentic real shlokas. Address THEIR specific feeling directly. Be warm like a wise friend.'
+    ].join('\n');
+
+    const result = await model.generateContent(prompt);
+    let raw = result.response.text().trim();
+    if (raw.startsWith(String.fromCharCode(96, 96, 96))) {
+      const lines = raw.split('\n');
+      lines.shift();
+      if (lines[lines.length - 1].trim() === String.fromCharCode(96, 96, 96)) lines.pop();
+      raw = lines.join('\n').trim();
+    }
+    const wisdom = JSON.parse(raw);
+    const required = ['source','reference','shloka_devanagari','transliteration','meaning','reflection','practice'];
+    for (const field of required) {
+      if (!wisdom[field]) throw new Error('Missing field: ' + field);
+    }
+    res.json({ success: true, wisdom });
+  } catch (err) {
+    console.error('/api/wisdom error:', err.message);
+    res.status(500).json({ error: 'The universe is momentarily quiet. Please try again.' });
+  }
+});
 // GET /api/plans — Get subscription plans
 app.get('/api/plans', (req, res) => {
   const plans = Object.entries(PLANS).map(([key, val]) => ({

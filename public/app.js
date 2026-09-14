@@ -768,3 +768,114 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ═══════════════════════════════════════════════════════════
+// SOUL CHECK — How Are You Feeling? (Real-time Gemini Wisdom)
+// ═══════════════════════════════════════════════════════════
+
+(function initSoulCheck() {
+  const textarea   = document.getElementById('soul-feeling-input');
+  const charNum    = document.getElementById('soul-char-num');
+  const seekBtn    = document.getElementById('soul-seek-btn');
+  const moodChips  = document.querySelectorAll('.mood-chip');
+  const resultWrap = document.getElementById('wisdom-result');
+  const loadingEl  = document.getElementById('wisdom-loading');
+  const cardEl     = document.getElementById('wisdom-card');
+  const errorEl    = document.getElementById('wisdom-error');
+  const errorTxt   = document.getElementById('wisdom-error-text');
+
+  if (!textarea || !seekBtn) return;
+
+  // ─── Char counter ───────────────────────────────────────
+  textarea.addEventListener('input', () => {
+    const len = textarea.value.length;
+    charNum.textContent = len;
+    charNum.style.color = len > 450 ? 'var(--crimson2)' : '';
+  });
+
+  // ─── Mood chips ─────────────────────────────────────────
+  moodChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      moodChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      textarea.value = chip.dataset.mood;
+      charNum.textContent = textarea.value.length;
+      textarea.focus();
+    });
+  });
+
+  // ─── Seek Wisdom ─────────────────────────────────────────
+  seekBtn.addEventListener('click', async () => {
+    const feeling = textarea.value.trim();
+    if (!feeling || feeling.length < 3) {
+      textarea.focus();
+      textarea.style.borderColor = 'var(--crimson2)';
+      setTimeout(() => { textarea.style.borderColor = ''; }, 1500);
+      return;
+    }
+
+    // Show loading
+    seekBtn.disabled = true;
+    seekBtn.querySelector('.soul-btn-text').textContent = 'Seeking...';
+    resultWrap.hidden = false;
+    loadingEl.style.display = 'flex';
+    cardEl.hidden = true;
+    errorEl.hidden = true;
+
+    // Scroll to result
+    setTimeout(() => {
+      resultWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+
+    try {
+      const response = await fetch('/api/wisdom', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feeling })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      const { wisdom } = data;
+
+      // Populate card
+      document.getElementById('wisdom-emoji').textContent       = wisdom.theme_emoji || '🌸';
+      document.getElementById('wisdom-source').textContent      = wisdom.source + ' \u00B7 ' + wisdom.reference;
+      document.getElementById('wisdom-devanagari').textContent  = wisdom.shloka_devanagari;
+      document.getElementById('wisdom-transliteration').textContent = wisdom.transliteration;
+      document.getElementById('wisdom-meaning').textContent     = wisdom.meaning;
+      document.getElementById('wisdom-reflection').textContent  = wisdom.reflection;
+      document.getElementById('wisdom-practice').textContent    = wisdom.practice;
+
+      // Show card
+      loadingEl.style.display = 'none';
+      cardEl.hidden = false;
+
+      // Scroll to card
+      setTimeout(() => {
+        cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
+
+    } catch (err) {
+      loadingEl.style.display = 'none';
+      errorEl.hidden = false;
+      errorTxt.textContent = err.message || 'The universe is momentarily quiet. Please try again.';
+    } finally {
+      seekBtn.disabled = false;
+      seekBtn.querySelector('.soul-btn-text').textContent = 'Seek Wisdom';
+    }
+  });
+
+  // Allow Enter+Ctrl to submit
+  textarea.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      seekBtn.click();
+    }
+  });
+
+})();
+
